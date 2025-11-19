@@ -13,8 +13,9 @@ export default function NavigationBar() {
     <nav className="border-b border-border bg-card">
       <Container className="flex items-center justify-between py-4">
         <div className="flex items-center gap-2">
-          <div className="size-8 rounded-md bg-linear-to-r from-primary to-primary/60" />
-          <h1 className="text-xl font-bold text-foreground">InvocreaApp</h1>
+          <div className="py-2 px-3 rounded-md bg-linear-to-r from-primary to-primary/60 flex items-center justify-center text-white text-xl font-bold">
+            Invocrea
+          </div>
         </div>
         <div className="flex items-center gap-4">
           <SignedOut>
