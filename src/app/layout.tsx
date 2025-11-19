@@ -20,6 +20,7 @@ export const metadata: Metadata = {
 
 // clerk ---------------------------------------------------------------------
 import { ClerkProvider } from "@clerk/nextjs";
+import NavigationBar from "../components/features/navigation-bar/NavigationBar";
 
 /*************  ✨ Windsurf Command ⭐  *************/
 /**
@@ -42,6 +43,8 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
+          {/* Navigation */}
+          <NavigationBar />
           {children}
         </body>
       </html>

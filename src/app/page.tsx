@@ -4,21 +4,15 @@ import Features from "../components/features/features/Features";
 import Hero from "../components/features/hero/Hero";
 import NavigationBar from "../components/features/navigation-bar/NavigationBar";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
-      {/* Navigation */}
-      <NavigationBar />
-
       {/* Hero Section */}
       <Hero />
-
       {/* Features Section */}
       <Features />
-
       {/* CTA Section */}
       <CallToAction />
-
       {/* Footer */}
       <Footer />
     </>
