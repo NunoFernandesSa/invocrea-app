@@ -1,3 +1,12 @@
+import {
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
+import Container from "../components/common/Container";
+
 export default function Home() {
-  return <div className="">Hello</div>;
+  return <Container>Hello</Container>;
 }
