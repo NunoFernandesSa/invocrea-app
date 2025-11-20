@@ -21,6 +21,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 
 // ----- Types -----
 import { InputsTypes } from "../types/inputs-types";
+import { useEffect } from "react";
 
 export function NewInvoiceForm() {
   const {
@@ -28,9 +29,15 @@ export function NewInvoiceForm() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<InputsTypes>();
+  } = useForm<InputsTypes>({
+    defaultValues: {
+      invoiceName: "",
+    },
+    mode: "onChange",
+  });
 
-  const onSubmit: SubmitHandler<InputsTypes> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<InputsTypes> = (data) =>
+    console.log(data.invoiceName.trim());
 
   return (
     <Dialog>
@@ -56,11 +63,23 @@ export function NewInvoiceForm() {
                 id="invoice-name"
                 placeholder="Invoice Name"
                 type="text"
-                {...register("invoiceName", { required: true })}
+                {...register("invoiceName", {
+                  required: true,
+                  minLength: {
+                    value: 6,
+                    message: "Minimum 6 characters",
+                  },
+                  maxLength: {
+                    value: 60,
+                    message: "Maximum 60 characters",
+                  },
+                  validate: (value) =>
+                    value.trim().length >= 6 || value.trim().length < 60,
+                })}
               />
               {errors.invoiceName && (
                 <span className="text-xs text-red-300">
-                  This field is required
+                  {errors.invoiceName.message}
                 </span>
               )}
             </div>
