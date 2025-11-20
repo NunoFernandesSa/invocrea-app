@@ -13,9 +13,11 @@ export default function DashboardPage() {
       {user && (
         <div>
           <h2 className="text-xl font-bold mb-4 mt-10">
-            Welcome {user.user?.fullName}!
+            Bienvenue {user.user?.fullName}!
           </h2>
-          <p>This is your dashboard where you can manage your invoices.</p>
+          <p>
+            Ceci est votre tableau de bord où vous pouvez gérer vos factures.
+          </p>
         </div>
       )}
 

@@ -50,7 +50,7 @@ export function NewInvoiceForm() {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline" size={"lg"} className="cursor-pointer">
-          New Invoice <MdAdd />
+          Nouvelle Facture <MdAdd />
         </Button>
       </DialogTrigger>
 
@@ -102,10 +102,10 @@ export function NewInvoiceForm() {
           <DialogFooter className="mt-3">
             <DialogClose asChild>
               <Button variant="outline" ref={closeDialogRef}>
-                Cancel
+                Annuler
               </Button>
             </DialogClose>
-            <Button type="submit">Save changes</Button>
+            <Button type="submit">Enregistrer</Button>
           </DialogFooter>
         </form>
       </DialogContent>
