@@ -21,13 +21,15 @@ import { useForm, SubmitHandler } from "react-hook-form";
 
 // ----- Types -----
 import { InputsTypes } from "../types/inputs-types";
-import { useEffect } from "react";
+import { useRef } from "react";
 
 export function NewInvoiceForm() {
+  const closeDialogRef = useRef<HTMLButtonElement>(null);
+
   const {
     register,
     handleSubmit,
-    watch,
+    reset,
     formState: { errors },
   } = useForm<InputsTypes>({
     defaultValues: {
@@ -36,8 +38,13 @@ export function NewInvoiceForm() {
     mode: "onChange",
   });
 
-  const onSubmit: SubmitHandler<InputsTypes> = (data) =>
-    console.log(data.invoiceName.trim());
+  const onSubmit: SubmitHandler<InputsTypes> = (data) => {
+    console.log(data);
+    reset();
+    if (closeDialogRef.current) {
+      closeDialogRef.current.click();
+    }
+  };
 
   return (
     <Dialog>
@@ -50,44 +57,53 @@ export function NewInvoiceForm() {
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader className="mb-6">
-            <DialogTitle>Create new invoice</DialogTitle>
+            <DialogTitle>Créer une nouvelle facture</DialogTitle>
             <DialogDescription>
-              Fill the form below to create a new invoice.
+              Remplissez le formulaire ci-dessous pour créer une nouvelle
+              facture.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             {/* ----- name ----- */}
             <div className="grid gap-3">
-              <Label htmlFor="invoice-name">Invoice Name</Label>
+              <Label htmlFor="invoice-name">Nom de la facture</Label>
               <Input
                 id="invoice-name"
-                placeholder="Invoice Name"
+                placeholder="Nom de la facture"
                 type="text"
                 {...register("invoiceName", {
                   required: true,
                   minLength: {
                     value: 6,
-                    message: "Minimum 6 characters",
+                    message: "Minimum 6 caractères",
                   },
                   maxLength: {
                     value: 60,
-                    message: "Maximum 60 characters",
+                    message: "Maximum 60 caractères",
                   },
-                  validate: (value) =>
-                    value.trim().length >= 6 || value.trim().length < 60,
+                  validate: (value) => {
+                    const trimmedValue = value.trim();
+                    if (trimmedValue.length < 6) {
+                      return "Minimum 6 caractères.";
+                    }
+                    if (trimmedValue.length > 60) {
+                      return "Maximum 60 caractères.";
+                    }
+                    return true;
+                  },
                 })}
               />
-              {errors.invoiceName && (
-                <span className="text-xs text-red-300">
-                  {errors.invoiceName.message}
-                </span>
-              )}
+              <span className="text-xs text-red-300">
+                {errors.invoiceName && errors.invoiceName.message}
+              </span>
             </div>
           </div>
 
           <DialogFooter className="mt-3">
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline" ref={closeDialogRef}>
+                Cancel
+              </Button>
             </DialogClose>
             <Button type="submit">Save changes</Button>
           </DialogFooter>
