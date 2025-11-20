@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 };
 
 // clerk ---------------------------------------------------------------------
-import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider, useUser } from "@clerk/nextjs";
 import NavigationBar from "../components/features/navigation-bar/NavigationBar";
 
 /*************  ✨ Windsurf Command ⭐  *************/
