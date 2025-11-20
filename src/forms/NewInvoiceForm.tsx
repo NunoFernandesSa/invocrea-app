@@ -19,13 +19,13 @@ import { MdAdd } from "react-icons/md";
 export function NewInvoiceForm() {
   return (
     <Dialog>
-      <form>
-        <DialogTrigger asChild>
-          <Button variant="outline">
-            New Invoice <MdAdd />
-          </Button>
-        </DialogTrigger>
+      <DialogTrigger asChild>
+        <Button variant="outline">
+          New Invoice <MdAdd />
+        </Button>
+      </DialogTrigger>
 
+      <form>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Create new invoice</DialogTitle>
@@ -40,10 +40,13 @@ export function NewInvoiceForm() {
               <Input
                 id="invoice-name"
                 name="invoice-name"
-                defaultValue="Invoice Name"
+                placeholder="Invoice Name"
+                type="text"
+                required
               />
             </div>
           </div>
+
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
