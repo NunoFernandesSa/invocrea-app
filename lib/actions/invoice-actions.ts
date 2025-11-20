@@ -1,7 +1,6 @@
 import { generateUniqueInvoiceID } from "@/src/utils/generate-unique-invoice-id";
 import { prisma } from "../prisma";
 import { EmptyInvoice } from "@/src/types/invoice-types";
-import { User } from "@/src/generated/prisma/client";
 
 /**
  * Creates a new empty invoice and associates it with the given user.
