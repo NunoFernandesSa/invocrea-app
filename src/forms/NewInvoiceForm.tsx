@@ -20,7 +20,7 @@ export function NewInvoiceForm() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">
+        <Button variant="outline" size={"lg"}>
           New Invoice <MdAdd />
         </Button>
       </DialogTrigger>
