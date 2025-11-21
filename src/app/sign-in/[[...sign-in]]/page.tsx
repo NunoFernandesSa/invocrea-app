@@ -1,12 +1,5 @@
-import { SignIn } from "@clerk/nextjs";
+import { AuthModal } from "@/src/components/features/auth/AuthModal";
 
-/**
- * Page component
- *
- * A page component that renders a sign in form.
- *
- * @returns {JSX.Element} The sign in form component.
- */
 export default function Page() {
-  return <SignIn />;
+  return <AuthModal mode="sign-in" />;
 }
