@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "next-themes";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -17,16 +18,6 @@ export const metadata: Metadata = {
 import { ClerkProvider } from "@clerk/nextjs";
 import NavigationBar from "../components/features/navigation-bar/NavigationBar";
 
-/*************  ✨ Windsurf Command ⭐  *************/
-/**
- * The root layout component.
- *
- * This component wraps the entire app with the ClerkProvider
- * and applies the Inter font to the body.
- *
- * @param {React.ReactNode} children - The children of the root layout.
- * @returns {JSX.Element} The root layout component.
- */
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -34,11 +25,13 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="fr" className="dark">
+      <html lang="fr" suppressHydrationWarning>
         <body className={`${lato.className} antialiased`}>
-          {/* Navigation */}
-          <NavigationBar />
-          {children}
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+            {/* Navigation */}
+            <NavigationBar />
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

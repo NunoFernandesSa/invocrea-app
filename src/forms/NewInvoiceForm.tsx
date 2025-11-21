@@ -36,7 +36,7 @@ import { useState } from "react";
  */
 export function NewInvoiceForm({
   createEmptyInvoiceAction,
-}: NewInvoiceFormProps) {
+}: NewInvoiceFormProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
   const user = useUser();
   const {
@@ -69,7 +69,11 @@ export function NewInvoiceForm({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size={"lg"} className="cursor-pointer">
+        <Button
+          variant="outline"
+          size={"lg"}
+          className="cursor-pointer border-2"
+        >
           Nouvelle Facture <MdAdd />
         </Button>
       </DialogTrigger>

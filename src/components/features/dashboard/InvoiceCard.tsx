@@ -12,7 +12,7 @@ export default async function InvoiceCard() {
   const invoices = await getAllInvoicesByUserId(userId);
 
   return (
-    <>
+    <div>
       {invoices.map((invoice) => (
         <Card
           key={invoice.id.toString()}
@@ -21,6 +21,6 @@ export default async function InvoiceCard() {
           <p className="font-bold">{invoice.name}</p>
         </Card>
       ))}
-    </>
+    </div>
   );
 }

@@ -25,7 +25,7 @@ export default async function DashboardPage() {
               </div>
             }
           >
-            {/* <InvoiceCard /> */}
+            <InvoiceCard />
           </Suspense>
         </div>
       </div>
