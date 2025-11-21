@@ -2,6 +2,7 @@ import { createEmptyInvoice } from "@/lib/actions/invoice-actions";
 import Container from "@/src/components/common/Container";
 import InvoiceCard from "@/src/components/features/dashboard/InvoiceCard";
 import UserWelcome from "@/src/components/features/dashboard/UserWelcome";
+import { Button } from "@/src/components/shadcn/ui/button";
 import { NewInvoiceForm } from "@/src/forms/NewInvoiceForm";
 import { Suspense } from "react";
 
@@ -12,12 +13,12 @@ export default async function DashboardPage() {
 
       <div className="p-6 rounded-lg shadow-md mt-6 bg-accent">
         {/* add invoice button */}
-        <div className="w-full mb-10">
+        <div className="w-full mb-10 flex justify-center md:justify-start">
           <NewInvoiceForm createEmptyInvoiceAction={createEmptyInvoice} />
         </div>
 
         {/* invoice list */}
-        <div className="flex flex-col md:flex-row flex-wrap gap-4 mt-4">
+        <div className="flex flex-col justify-center md:justify-start items-center md:items-start md:flex-row flex-wrap gap-4 mt-4">
           <Suspense
             fallback={
               <div className="font-semibold text-sm">

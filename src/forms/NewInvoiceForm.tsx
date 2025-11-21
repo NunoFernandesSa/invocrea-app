@@ -69,11 +69,7 @@ export function NewInvoiceForm({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          size={"lg"}
-          className="cursor-pointer border-2"
-        >
+        <Button variant="outline" size={"lg"} className="cursor-pointer">
           Nouvelle Facture <MdAdd />
         </Button>
       </DialogTrigger>

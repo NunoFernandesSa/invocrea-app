@@ -68,6 +68,23 @@ export async function getAllInvoicesByUserId(
       throw new Error("Invoices not found");
     }
 
+    // Update invoices status to 'Impayée' if due date is passed and invoice status is 'En Attente'
+    // Brouillon = 1, Envoyée = 2, Validée = 3, En Attente: 4, Payée = 5 , Annulée = 6, Impayée = 7
+    if (invoices) {
+      const today = new Date();
+      invoices.map(async (invoice: any) => {
+        const dueDate = new Date(invoice.dueDate);
+        if (dueDate < today && invoice.status === 4) {
+          const updatedInvoice = await prisma.invoice.update({
+            where: { id: invoice.id },
+            data: { status: 7 },
+            include: { lines: true },
+          });
+          return updatedInvoice;
+        }
+      });
+    }
+
     return invoices;
   } catch (error) {
     console.log("Error while trying retrieval invoices", error);

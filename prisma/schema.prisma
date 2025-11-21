@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  // url      = env("DATABASE_URL")
 }
 
 model User {
@@ -28,7 +28,7 @@ model Invoice {
   dueDate       String        @default("")
   vatActive     Boolean       @default(false)
   vatRate       Float         @default(20)
-  status        Int           @default(1)
+  status        Int           @default(1) // Brouillon = 1, Envoyée = 2, En attente = 3, Validée = 4, Payée = 5 , Annulée = 6, Impayée = 7
   lines         InvoiceLine[] @relation("InvoiceLines")
   userId        String
   createdById   User          @relation("UserInvoices", fields: [userId], references: [id])
