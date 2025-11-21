@@ -1,7 +1,8 @@
 "use client";
 
-import { SignIn, SignUp } from "@clerk/nextjs";
+import { SignIn, SignUp, useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface AuthModalProps {
   mode: "sign-in" | "sign-up";
@@ -9,10 +10,17 @@ interface AuthModalProps {
 
 export function AuthModal({ mode }: AuthModalProps) {
   const router = useRouter();
+  const { isSignedIn } = useAuth();
 
   const handleClose = () => {
     router.back();
   };
+
+  useEffect(() => {
+    if (isSignedIn) {
+      router.push("/dashboard");
+    }
+  }, [isSignedIn, router]);
 
   return (
     <div
@@ -26,7 +34,6 @@ export function AuthModal({ mode }: AuthModalProps) {
         {mode === "sign-in" ? (
           <SignIn
             routing="virtual"
-            fallbackRedirectUrl="/dashboard"
             signUpUrl="/sign-up"
             appearance={{
               elements: {
@@ -45,7 +52,6 @@ export function AuthModal({ mode }: AuthModalProps) {
         ) : (
           <SignUp
             routing="virtual"
-            fallbackRedirectUrl="/dashboard"
             signInUrl="/sign-in"
             appearance={{
               elements: {

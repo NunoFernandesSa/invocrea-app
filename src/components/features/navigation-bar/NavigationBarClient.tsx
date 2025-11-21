@@ -62,6 +62,9 @@ export default function NavigationBarClient() {
             </SignUpButton>
           </SignedOut>
           <SignedIn>
+            <Button asChild>
+              <Link href={"/dashboard"}>Dashboard</Link>
+            </Button>
             <UserButton />
           </SignedIn>
         </div>
