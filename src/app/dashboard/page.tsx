@@ -2,7 +2,6 @@ import { createEmptyInvoice } from "@/lib/actions/invoice-actions";
 import Container from "@/src/components/common/Container";
 import InvoiceCard from "@/src/components/features/dashboard/InvoiceCard";
 import UserWelcome from "@/src/components/features/dashboard/UserWelcome";
-import { Button } from "@/src/components/shadcn/ui/button";
 import { NewInvoiceForm } from "@/src/forms/NewInvoiceForm";
 import { Suspense } from "react";
 

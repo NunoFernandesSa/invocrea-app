@@ -8,7 +8,6 @@ import {
   CardTitle,
 } from "../../shadcn/ui/card";
 import { getAllInvoicesByUserId } from "@/lib/actions/invoice-actions";
-import { Button } from "../../shadcn/ui/button";
 
 export default async function InvoiceCard() {
   const { userId } = await auth();
@@ -19,10 +18,9 @@ export default async function InvoiceCard() {
 
   const invoices = await getAllInvoicesByUserId(userId);
 
-  console.log(invoices);
-
   return (
     <>
+      {invoices.length === 0 && <p>Aucune facture pour le moment...</p>}
       {invoices.map((invoice) => (
         <Card key={invoice.id.toString()} className="w-full max-w-sm">
           <CardHeader>
