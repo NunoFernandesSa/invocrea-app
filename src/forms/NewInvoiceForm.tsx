@@ -1,3 +1,5 @@
+"use client";
+
 // ----- Shadcn -----
 import { Button } from "../components/shadcn/ui/button";
 import {
@@ -21,11 +23,15 @@ import { useForm, SubmitHandler } from "react-hook-form";
 
 // ----- Types -----
 import { InputsTypes } from "../types/inputs-types";
-import { useRef } from "react";
+import { NewInvoiceFormProps } from "../types/invoice-types";
+import { useUser } from "@clerk/nextjs";
+import { useState } from "react";
 
-export function NewInvoiceForm() {
-  const closeDialogRef = useRef<HTMLButtonElement>(null);
-
+export function NewInvoiceForm({
+  createEmptyInvoiceAction,
+}: NewInvoiceFormProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const user = useUser();
   const {
     register,
     handleSubmit,
@@ -38,16 +44,23 @@ export function NewInvoiceForm() {
     mode: "onChange",
   });
 
-  const onSubmit: SubmitHandler<InputsTypes> = (data) => {
-    console.log(data);
-    reset();
-    if (closeDialogRef.current) {
-      closeDialogRef.current.click();
+  const onSubmit: SubmitHandler<InputsTypes> = async (data) => {
+    try {
+      await createEmptyInvoiceAction(
+        user.user?.primaryEmailAddress?.emailAddress || "",
+        data.invoiceName
+      );
+      // Reset the form
+      reset();
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Erreur lors de la création de la facture:", error);
+      throw error;
     }
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" size={"lg"} className="cursor-pointer">
           Nouvelle Facture <MdAdd />
@@ -101,9 +114,7 @@ export function NewInvoiceForm() {
 
           <DialogFooter className="mt-3">
             <DialogClose asChild>
-              <Button variant="outline" ref={closeDialogRef}>
-                Annuler
-              </Button>
+              <Button variant="outline">Annuler</Button>
             </DialogClose>
             <Button type="submit">Enregistrer</Button>
           </DialogFooter>

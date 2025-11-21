@@ -1,30 +1,17 @@
-"use client";
-
+import { createEmptyInvoice } from "@/lib/actions/invoice-actions";
 import Container from "@/src/components/common/Container";
+import UserWelcome from "@/src/components/features/dashboard/UserWelcome";
 import { NewInvoiceForm } from "@/src/forms/NewInvoiceForm";
-import { useUser } from "@clerk/nextjs";
 
 export default function DashboardPage() {
-  const user = useUser();
-
   return (
     <Container>
-      {/* show user name is signed in */}
-      {user && (
-        <div>
-          <h2 className="text-xl font-bold mb-4 mt-10">
-            Bienvenue {user.user?.fullName}!
-          </h2>
-          <p>
-            Ceci est votre tableau de bord où vous pouvez gérer vos factures.
-          </p>
-        </div>
-      )}
+      <UserWelcome />
 
       <div className="p-6 rounded-lg shadow-md mt-6 bg-accent">
         {/* add invoice button */}
         <div className="w-full mb-10">
-          <NewInvoiceForm />
+          <NewInvoiceForm createEmptyInvoiceAction={createEmptyInvoice} />
         </div>
 
         {/* invoice list */}

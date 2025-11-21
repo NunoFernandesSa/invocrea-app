@@ -4,6 +4,13 @@ export type EmptyInvoice = {
   userId: String;
 };
 
+export type NewInvoiceFormProps = {
+  createEmptyInvoiceAction: (
+    userEmail: string,
+    invoiceName: string
+  ) => Promise<EmptyInvoice>;
+};
+
 export type Invoice = {
   id: String;
   name: String;

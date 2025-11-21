@@ -1,3 +1,5 @@
+"use server";
+
 import { generateUniqueInvoiceID } from "@/src/utils/generate-unique-invoice-id";
 import { prisma } from "../prisma";
 import { EmptyInvoice } from "@/src/types/invoice-types";
