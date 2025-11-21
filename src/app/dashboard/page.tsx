@@ -1,9 +1,10 @@
 import { createEmptyInvoice } from "@/lib/actions/invoice-actions";
 import Container from "@/src/components/common/Container";
+import InvoiceCard from "@/src/components/features/dashboard/InvoiceCard";
 import UserWelcome from "@/src/components/features/dashboard/UserWelcome";
 import { NewInvoiceForm } from "@/src/forms/NewInvoiceForm";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
   return (
     <Container>
       <UserWelcome />
@@ -15,7 +16,9 @@ export default function DashboardPage() {
         </div>
 
         {/* invoice list */}
-        <div className="flex flex-col md:flex-row flex-wrap gap-4 mt-4"></div>
+        <div className="flex flex-col md:flex-row flex-wrap gap-4 mt-4">
+          <InvoiceCard />
+        </div>
       </div>
     </Container>
   );

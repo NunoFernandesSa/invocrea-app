@@ -48,3 +48,18 @@ export async function createEmptyInvoice(
     throw error;
   }
 }
+
+export async function getAllInvoices() {
+  try {
+    const invoices = await prisma.invoice.findMany();
+
+    if (!invoices) {
+      throw new Error("Invoices not found");
+    }
+
+    return invoices;
+  } catch (error) {
+    console.log("Error while trying retrieval invoices", error);
+    throw error;
+  }
+}
