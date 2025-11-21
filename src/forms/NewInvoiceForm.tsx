@@ -26,6 +26,7 @@ import { InputsTypes } from "../types/inputs-types";
 import { NewInvoiceFormProps } from "../types/invoice-types";
 import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 /**
  * Component form for creating a new empty invoice.
@@ -37,6 +38,7 @@ import { useState } from "react";
 export function NewInvoiceForm({
   createEmptyInvoiceAction,
 }: NewInvoiceFormProps): JSX.Element {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const user = useUser();
   const {
@@ -60,6 +62,7 @@ export function NewInvoiceForm({
       // Reset the form
       reset();
       setIsOpen(false);
+      router.refresh();
     } catch (error) {
       console.error("Erreur lors de la création de la facture:", error);
       throw error;
