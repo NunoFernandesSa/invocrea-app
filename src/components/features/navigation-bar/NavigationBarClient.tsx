@@ -11,7 +11,6 @@ import {
 } from "@clerk/nextjs";
 import Container from "../../common/Container";
 import { Button } from "../../shadcn/ui/button";
-import Link from "next/link";
 
 export default function NavigationBarClient() {
   const { user } = useUser();
@@ -62,9 +61,6 @@ export default function NavigationBarClient() {
             </SignUpButton>
           </SignedOut>
           <SignedIn>
-            <Button asChild>
-              <Link href={"/dashboard"}>Dashboard</Link>
-            </Button>
             <UserButton />
           </SignedIn>
         </div>
