@@ -1,8 +1,18 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
+import { JSX } from "react";
 
-export default function UserWelcome() {
+/**
+ * UserWelcome component
+ *
+ * A welcome message component that displays a message to the user.
+ * It uses the useUser hook from @clerk/nextjs to get the user data.
+ * If the user is not null, it displays the message with the user's full name.
+ *
+ * @returns {JSX.Element} The welcome message component.
+ */
+export default function UserWelcome(): JSX.Element {
   const user = useUser();
   return (
     user && (

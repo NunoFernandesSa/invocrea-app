@@ -27,6 +27,13 @@ import { NewInvoiceFormProps } from "../types/invoice-types";
 import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
 
+/**
+ * Component form for creating a new empty invoice.
+ * The form will reset when submitted successfully.
+ *
+ * @param {NewInvoiceFormProps} createEmptyInvoiceAction - A function that creates a new empty invoice.
+ * @returns {JSX.Element} - A JSX element representing the form component.
+ */
 export function NewInvoiceForm({
   createEmptyInvoiceAction,
 }: NewInvoiceFormProps) {
