@@ -2,7 +2,7 @@
 
 import { generateUniqueInvoiceID } from "@/src/utils/generate-unique-invoice-id";
 import { prisma } from "../prisma";
-import { EmptyInvoice } from "@/src/types/invoice-types";
+import { EmptyInvoice, Invoice } from "@/src/types/invoice-types";
 
 /**
  * Creates a new empty invoice and associates it with the given user.
@@ -49,9 +49,20 @@ export async function createEmptyInvoice(
   }
 }
 
-export async function getAllInvoices() {
+/**
+ * Retrieves all invoices for a specific user from the database, including their associated lines.
+ * @param {string} userId - The ID of the user whose invoices are to be retrieved.
+ * @returns {Promise<Invoice[]>} A promise resolving to an array of invoices with their lines.
+ * @throws {Error} If an error occurs during the database retrieval.
+ */
+export async function getAllInvoicesByUserId(
+  userId: string
+): Promise<Invoice[]> {
   try {
-    const invoices = await prisma.invoice.findMany();
+    const invoices = await prisma.invoice.findMany({
+      where: { userId: userId },
+      include: { lines: true },
+    });
 
     if (!invoices) {
       throw new Error("Invoices not found");

@@ -1,15 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Lato } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const lato = Lato({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["100", "300", "400", "700", "900"],
 });
 
 export const metadata: Metadata = {
@@ -19,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 // clerk ---------------------------------------------------------------------
-import { ClerkProvider, useUser } from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import NavigationBar from "../components/features/navigation-bar/NavigationBar";
 
 /*************  ✨ Windsurf Command ⭐  *************/
@@ -27,7 +22,7 @@ import NavigationBar from "../components/features/navigation-bar/NavigationBar";
  * The root layout component.
  *
  * This component wraps the entire app with the ClerkProvider
- * and applies the Geist Sans and Geist Mono fonts to the body.
+ * and applies the Inter font to the body.
  *
  * @param {React.ReactNode} children - The children of the root layout.
  * @returns {JSX.Element} The root layout component.
@@ -40,9 +35,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="fr" className="dark">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+        <body className={`${lato.className} antialiased`}>
           {/* Navigation */}
           <NavigationBar />
           {children}

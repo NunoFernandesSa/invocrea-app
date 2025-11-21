@@ -1,15 +1,21 @@
-import React from "react";
+import { auth } from "@clerk/nextjs/server";
 import { Card } from "../../shadcn/ui/card";
-import { getAllInvoices } from "@/lib/actions/invoice-actions";
+import { getAllInvoicesByUserId } from "@/lib/actions/invoice-actions";
 
 export default async function InvoiceCard() {
-  const invoices = await getAllInvoices();
+  const { userId } = await auth();
+
+  if (!userId) {
+    return null;
+  }
+
+  const invoices = await getAllInvoicesByUserId(userId);
 
   return (
     <>
       {invoices.map((invoice) => (
         <Card
-          key={invoice.id}
+          key={invoice.id.toString()}
           className="w-80 flex items-center justify-center"
         >
           <p className="font-bold">{invoice.name}</p>

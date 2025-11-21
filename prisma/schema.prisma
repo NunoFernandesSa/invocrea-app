@@ -1,6 +1,6 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
+  output   = "./generated/prisma"
 }
 
 datasource db {
@@ -9,8 +9,7 @@ datasource db {
 }
 
 model User {
-  id       String    @id @default(cuid())
-  clerkId  String    @unique @map("clerk_id")
+  id       String    @id // clerk id
   name     String?
   email    String    @unique
   invoices Invoice[] @relation("UserInvoices")
@@ -33,6 +32,8 @@ model Invoice {
   lines         InvoiceLine[] @relation("InvoiceLines")
   userId        String
   createdById   User          @relation("UserInvoices", fields: [userId], references: [id])
+
+  @@map("invoices")
 }
 
 model InvoiceLine {
@@ -42,4 +43,6 @@ model InvoiceLine {
   unitPrice   Float    @default(0)
   invoiceId   String?
   invoice     Invoice? @relation("InvoiceLines", fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@map("invoice_lines")
 }
