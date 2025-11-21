@@ -3,6 +3,7 @@ import Container from "@/src/components/common/Container";
 import InvoiceCard from "@/src/components/features/dashboard/InvoiceCard";
 import UserWelcome from "@/src/components/features/dashboard/UserWelcome";
 import { NewInvoiceForm } from "@/src/forms/NewInvoiceForm";
+import { Suspense } from "react";
 
 export default async function DashboardPage() {
   return (
@@ -17,7 +18,15 @@ export default async function DashboardPage() {
 
         {/* invoice list */}
         <div className="flex flex-col md:flex-row flex-wrap gap-4 mt-4">
-          <InvoiceCard />
+          <Suspense
+            fallback={
+              <div className="font-semibold text-sm">
+                Chargement des factures...
+              </div>
+            }
+          >
+            <InvoiceCard />
+          </Suspense>
         </div>
       </div>
     </Container>
