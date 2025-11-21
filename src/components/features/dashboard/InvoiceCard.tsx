@@ -18,19 +18,73 @@ export default async function InvoiceCard() {
 
   const invoices = await getAllInvoicesByUserId(userId);
 
+  if (!invoices || invoices.length === 0) {
+    return (
+      <div className="w-full flex flex-col items-center justify-center py-12 text-center">
+        <div className="text-muted-foreground mb-4">
+          {/* Vous pouvez ajouter une icône ici si vous voulez */}
+          <svg
+            className="w-16 h-16 mx-auto mb-4 opacity-50"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1}
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            />
+          </svg>
+        </div>
+        <h3 className="text-lg font-semibold mb-2">Aucune facture</h3>
+        <p className="text-muted-foreground max-w-md">
+          Vous n'avez pas encore créé de facture. Commencez par créer votre
+          première facture pour la voir apparaître ici.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <>
-      {invoices.length === 0 && <p>Aucune facture pour le moment...</p>}
       {invoices.map((invoice) => (
-        <Card key={invoice.id.toString()} className="w-full max-w-sm">
+        <Card key={invoice.id.toString()} className="w-auto">
           <CardHeader>
-            <CardTitle>{invoice.id}</CardTitle>
+            <CardTitle className="flex items-center justify-between">
+              <span>Facture #{invoice.id.slice(0, 8)}...</span>
+              <span className={`text-xs px-2 py-1 rounded-full`}>status</span>
+            </CardTitle>
             <CardDescription>{invoice.name}</CardDescription>
           </CardHeader>
-          <CardContent>
-            <p></p>
+          <CardContent className="space-y-2">
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Client:</span>
+              <span>{invoice.clientName || "Non spécifié"}</span>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Date:</span>
+              <span>{invoice.invoiceDate || "Non définie"}</span>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Échéance:</span>
+              <span>{invoice.dueDate || "Non définie"}</span>
+            </div>
+            {invoice.lines && invoice.lines.length > 0 && (
+              <div className="flex justify-between text-sm">
+                <span className="text-muted-foreground">Total:</span>
+                <span className="font-semibold">... €</span>
+              </div>
+            )}
           </CardContent>
-          <CardFooter className="flex-col gap-2"></CardFooter>
+          <CardFooter className="flex justify-between">
+            <button className="text-xs text-blue-600 hover:text-blue-800">
+              Voir détails
+            </button>
+            <button className="text-xs text-gray-600 hover:text-gray-800">
+              Modifier
+            </button>
+          </CardFooter>
         </Card>
       ))}
     </>
