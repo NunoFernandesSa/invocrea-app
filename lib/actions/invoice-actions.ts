@@ -65,6 +65,9 @@ export async function getAllInvoicesByUserId(
       where: { userId: userId },
       include: { lines: true },
       take: limit,
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     if (!invoices) {
