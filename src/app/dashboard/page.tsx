@@ -1,7 +1,6 @@
 import { createEmptyInvoice } from "@/lib/actions/invoice-actions";
 import Container from "@/src/components/common/Container";
-import InvoiceCard from "@/src/components/features/dashboard/InvoiceCard";
-import InvoiceList from "@/src/components/features/dashboard/InvoiceList";
+import InvoiceList from "@/src/components/features/dashboard/invoices/InvoiceList";
 import UserWelcome from "@/src/components/features/dashboard/UserWelcome";
 import { NewInvoiceForm } from "@/src/forms/NewInvoiceForm";
 import { Suspense } from "react";

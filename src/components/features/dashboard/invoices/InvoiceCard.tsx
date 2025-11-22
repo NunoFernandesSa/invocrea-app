@@ -5,13 +5,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../../shadcn/ui/card";
-import { Button } from "../../shadcn/ui/button";
+} from "@/src/components/shadcn/ui/card";
+import { Button } from "@/src/components/shadcn/ui/button";
 import { getAllInvoicesByUserId } from "@/lib/actions/invoice-actions";
 
 // ----- icons -----
 import { PencilLine } from "lucide-react";
 import { Eye } from "lucide-react";
+import StatusBadge from "./StatusBadge";
 
 export default async function InvoiceCard() {
   const { userId } = await auth();
@@ -70,7 +71,7 @@ export default async function InvoiceCard() {
               </span>
               {/* invoice status */}
               <span className={`text-xs px-2 py-1 rounded-full`}>
-                {invoice.status.toString().toUpperCase()}
+                <StatusBadge status={invoice.status.toString()} />
               </span>
             </CardTitle>
 
