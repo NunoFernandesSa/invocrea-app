@@ -52,31 +52,36 @@ export default async function InvoiceCard() {
         <Card key={invoice.id.toString()} className="w-auto">
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              <span>Facture #{invoice.id.slice(0, 8)}...</span>
-              <span className={`text-xs px-2 py-1 rounded-full`}>status</span>
+              <span className={`text-lg font-semibold`}>
+                {invoice.lines && invoice.lines.length > 0 ? (
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground"></span>
+                    <span className="font-semibold">€</span>
+                  </div>
+                ) : (
+                  <div className="flex justify-between text-sm">
+                    <span className="font-semibold">€</span>
+                  </div>
+                )}
+              </span>
+              <span className={`text-xs px-2 py-1 rounded-full`}>
+                {invoice.status.toString().toUpperCase()}
+              </span>
             </CardTitle>
-            <CardDescription>{invoice.name}</CardDescription>
+            <CardDescription>
+              <span>{invoice.id}</span>
+            </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-2">
+
+          <CardContent>
             <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Client:</span>
-              <span>{invoice.clientName || "Non spécifié"}</span>
+              <span className="text-muted-foreground"> {invoice.name}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Date:</span>
-              <span>{invoice.invoiceDate || "Non définie"}</span>
+              <span className="text-muted-foreground">{invoice.dueDate}</span>
             </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Échéance:</span>
-              <span>{invoice.dueDate || "Non définie"}</span>
-            </div>
-            {invoice.lines && invoice.lines.length > 0 && (
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Total:</span>
-                <span className="font-semibold">... €</span>
-              </div>
-            )}
           </CardContent>
+
           <CardFooter className="flex justify-between">
             <button className="text-xs text-blue-600 hover:text-blue-800">
               Voir détails

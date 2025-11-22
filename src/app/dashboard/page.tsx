@@ -1,6 +1,7 @@
 import { createEmptyInvoice } from "@/lib/actions/invoice-actions";
 import Container from "@/src/components/common/Container";
 import InvoiceCard from "@/src/components/features/dashboard/InvoiceCard";
+import InvoiceList from "@/src/components/features/dashboard/InvoiceList";
 import UserWelcome from "@/src/components/features/dashboard/UserWelcome";
 import { NewInvoiceForm } from "@/src/forms/NewInvoiceForm";
 import { Suspense } from "react";
@@ -17,17 +18,15 @@ export default async function DashboardPage() {
         </div>
 
         {/* invoice list */}
-        <div className="flex flex-col justify-center md:justify-start items-center md:items-start md:flex-row flex-wrap gap-4 mt-4">
-          <Suspense
-            fallback={
-              <div className="font-semibold text-sm">
-                Chargement des factures...
-              </div>
-            }
-          >
-            <InvoiceCard />
-          </Suspense>
-        </div>
+        <Suspense
+          fallback={
+            <div className="font-semibold text-sm">
+              Chargement des factures...
+            </div>
+          }
+        >
+          <InvoiceList />
+        </Suspense>
       </div>
     </Container>
   );

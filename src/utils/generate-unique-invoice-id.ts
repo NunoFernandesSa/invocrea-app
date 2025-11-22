@@ -13,7 +13,7 @@ export const generateUniqueInvoiceID = async () => {
   const year = new Date().getFullYear().toString();
 
   while (!isUnique) {
-    uniqueId = `${year}-${randomBytes(6).toString("hex")}`;
+    uniqueId = `${year}-${randomBytes(3).toString("hex").toUpperCase()}`;
 
     const existingInvoiceID = await prisma.invoice.findUnique({
       where: { id: uniqueId },
