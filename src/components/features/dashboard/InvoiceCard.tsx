@@ -55,8 +55,9 @@ export default async function InvoiceCard() {
     <>
       {invoices.map((invoice) => (
         <Card key={invoice.id.toString()} className="w-auto">
-          <CardHeader>
+          <CardHeader className="pb-0 mb-1">
             <CardTitle className="flex items-center justify-between">
+              {/* invoice total */}
               <span className={`text-lg font-semibold`}>
                 {invoice.lines && invoice.lines.length > 0 ? (
                   <div className="flex justify-between text-sm">
@@ -69,29 +70,30 @@ export default async function InvoiceCard() {
                   </div>
                 )}
               </span>
+              {/* invoice status */}
               <span className={`text-xs px-2 py-1 rounded-full`}>
                 {invoice.status.toString().toUpperCase()}
               </span>
             </CardTitle>
+
             <CardDescription>
               <span className="font-semibold">{invoice.id}</span>
+
+              <div className="flex justify-between text-sm">
+                <span className="text-muted-foreground"> {invoice.name}</span>
+              </div>
+
+              <div className="flex justify-between text-sm">
+                <span className="text-muted-foreground">{invoice.dueDate}</span>
+              </div>
             </CardDescription>
           </CardHeader>
 
-          <CardContent>
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground"> {invoice.name}</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">{invoice.dueDate}</span>
-            </div>
-          </CardContent>
-
-          <CardFooter className="flex justify-end gap-2">
-            <Button variant="ghost" size="icon">
+          <CardFooter className="flex justify-end gap-2 pt-0 mt-0">
+            <Button variant="outline" size="icon">
               <Eye />
             </Button>
-            <Button variant="ghost" size="icon">
+            <Button variant="outline" size="icon">
               <PencilLine />
             </Button>
           </CardFooter>
