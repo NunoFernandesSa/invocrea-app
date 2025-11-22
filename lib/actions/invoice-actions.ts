@@ -52,16 +52,19 @@ export async function createEmptyInvoice(
 /**
  * Retrieves all invoices for a specific user from the database, including their associated lines.
  * @param {string} userId - The ID of the user whose invoices are to be retrieved.
+ * @param {number} [limit] - Optional. The maximum number of invoices to retrieve.
  * @returns {Promise<Invoice[]>} A promise resolving to an array of invoices with their lines.
  * @throws {Error} If an error occurs during the database retrieval.
  */
 export async function getAllInvoicesByUserId(
-  userId: string
+  userId: string,
+  limit?: number
 ): Promise<Invoice[]> {
   try {
     const invoices = await prisma.invoice.findMany({
       where: { userId: userId },
       include: { lines: true },
+      take: limit,
     });
 
     if (!invoices) {
