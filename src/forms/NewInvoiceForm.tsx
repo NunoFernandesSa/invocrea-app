@@ -28,6 +28,9 @@ import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+// ----- Canvas confetti -----
+import confetti from "canvas-confetti";
+
 /**
  * Component form for creating a new empty invoice.
  * The form will reset when submitted successfully.
@@ -63,6 +66,13 @@ export function NewInvoiceForm({
       reset();
       setIsOpen(false);
       router.refresh();
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: {
+          y: 0.6,
+        },
+      });
     } catch (error) {
       console.error("Erreur lors de la création de la facture:", error);
       throw error;

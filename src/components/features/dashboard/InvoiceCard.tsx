@@ -1,7 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -27,7 +26,6 @@ export default async function InvoiceCard() {
     return (
       <div className="w-full flex flex-col items-center justify-center py-12 text-center">
         <div className="text-muted-foreground mb-4">
-          {/* Vous pouvez ajouter une icône ici si vous voulez */}
           <svg
             className="w-16 h-16 mx-auto mb-4 opacity-50"
             fill="none"
