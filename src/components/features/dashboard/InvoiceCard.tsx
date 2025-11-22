@@ -7,7 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from "../../shadcn/ui/card";
+import { Button } from "../../shadcn/ui/button";
 import { getAllInvoicesByUserId } from "@/lib/actions/invoice-actions";
+
+// ----- icons -----
+import { PencilLine } from "lucide-react";
+import { Eye } from "lucide-react";
 
 export default async function InvoiceCard() {
   const { userId } = await auth();
@@ -69,7 +74,7 @@ export default async function InvoiceCard() {
               </span>
             </CardTitle>
             <CardDescription>
-              <span>{invoice.id}</span>
+              <span className="font-semibold">{invoice.id}</span>
             </CardDescription>
           </CardHeader>
 
@@ -82,13 +87,13 @@ export default async function InvoiceCard() {
             </div>
           </CardContent>
 
-          <CardFooter className="flex justify-between">
-            <button className="text-xs text-blue-600 hover:text-blue-800">
-              Voir détails
-            </button>
-            <button className="text-xs text-gray-600 hover:text-gray-800">
-              Modifier
-            </button>
+          <CardFooter className="flex justify-end gap-2">
+            <Button variant="ghost" size="icon">
+              <Eye />
+            </Button>
+            <Button variant="ghost" size="icon">
+              <PencilLine />
+            </Button>
           </CardFooter>
         </Card>
       ))}
