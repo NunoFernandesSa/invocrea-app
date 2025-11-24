@@ -13,6 +13,7 @@ import { getAllInvoicesByUserId } from "@/lib/actions/invoice-actions";
 import { PencilLine } from "lucide-react";
 import { Eye } from "lucide-react";
 import StatusBadge from "./StatusBadge";
+import Link from "next/link";
 
 export default async function InvoiceCard() {
   const { userId } = await auth();
@@ -89,12 +90,12 @@ export default async function InvoiceCard() {
           </CardHeader>
 
           <CardFooter className="flex justify-end gap-2 pt-0 mt-0">
-            <Button variant="outline" size="icon">
-              <Eye />
-            </Button>
-            <Button variant="outline" size="icon">
-              <PencilLine />
-            </Button>
+            {/* view invoice details */}
+            <Link href={`/dashboard/invoice/${invoice.id}`}>
+              <Button variant="outline" size="icon">
+                <Eye />
+              </Button>
+            </Link>
           </CardFooter>
         </Card>
       ))}
