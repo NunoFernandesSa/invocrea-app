@@ -58,10 +58,20 @@ export function NewInvoiceForm({
 
   const onSubmit: SubmitHandler<InputsTypes> = async (data) => {
     try {
-      await createEmptyInvoiceAction(
+      const result = await createEmptyInvoiceAction(
         user.user?.primaryEmailAddress?.emailAddress || "",
         data.invoiceName
       );
+
+      if (!result.success) {
+        console.error(
+          "Erreur lors de la création de la facture:",
+          result.error
+        );
+        // TODO: You might want to show this error to the user via a toast or alert
+        return;
+      }
+
       // Reset the form
       reset();
       setIsOpen(false);

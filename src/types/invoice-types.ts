@@ -11,7 +11,7 @@ export type NewInvoiceFormProps = {
   createEmptyInvoiceAction: (
     userEmail: string,
     invoiceName: string
-  ) => Promise<EmptyInvoice>;
+  ) => Promise<{ success: boolean; data?: EmptyInvoice; error?: string }>;
 };
 
 export type Invoice = {

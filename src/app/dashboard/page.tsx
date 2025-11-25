@@ -5,6 +5,12 @@ import UserWelcome from "@/src/components/features/dashboard/UserWelcome";
 import { NewInvoiceForm } from "@/src/forms/NewInvoiceForm";
 import { Suspense } from "react";
 
+/**
+ * Renders the main dashboard page, displaying a user welcome,
+ * a form to create new invoices, and a list of existing invoices.
+ * This is an asynchronous server component.
+ * @returns {Promise<JSX.Element>} The Dashboard page component.
+ */
 export default async function DashboardPage() {
   return (
     <Container>
