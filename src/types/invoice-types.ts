@@ -23,6 +23,8 @@ export type Invoice = {
   vatActive: boolean;
   vatRate: number;
   status: number;
+  createdAt: Date;
+  updatedAt: Date | null;
   lines: InvoiceLine[];
   userId: string;
 };
@@ -33,6 +35,6 @@ export type InvoiceLine = {
   quantity: number;
   unitPrice: number;
   createdAt: Date;
-  updatedAt: Date;
-  invoiceId: string;
+  updatedAt: Date | null;
+  invoiceId: string | null;
 };

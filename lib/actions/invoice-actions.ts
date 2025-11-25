@@ -97,3 +97,27 @@ export async function getAllInvoicesByUserId(
     throw error;
   }
 }
+
+/**
+ * Retrieves a specific invoice by its ID from the database, including its associated lines.
+ * @param {string} id - The ID of the invoice to retrieve.
+ * @returns {Promise<Invoice | null>} A promise resolving to the invoice with its lines, or null if not found.
+ * @throws {Error} If an error occurs during the database retrieval.
+ */
+export async function getInvoiceById(id: string): Promise<Invoice | null> {
+  try {
+    const invoice = await prisma.invoice.findUnique({
+      where: { id },
+      include: { lines: true },
+    });
+
+    if (!invoice) {
+      throw new Error("Invoice not found");
+    }
+
+    return invoice;
+  } catch (error) {
+    console.log("Error while trying retrieval invoice", error);
+    throw error;
+  }
+}
