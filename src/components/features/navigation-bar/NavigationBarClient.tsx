@@ -1,6 +1,9 @@
 "use client";
 
+// ----- React -----
 import { useEffect } from "react";
+
+// ----- Clerk -----
 import {
   SignedIn,
   SignedOut,
@@ -9,10 +12,18 @@ import {
   UserButton,
   useUser,
 } from "@clerk/nextjs";
+
+// ----- custom components -----
 import Container from "../../common/Container";
+
+// ----- shadcn -----
 import { Button } from "../../shadcn/ui/button";
 
-export default function NavigationBarClient() {
+/**
+ * NavigationBarClient component
+ * @returns {JSX.Element} The NavigationBarClient component.
+ */
+export default function NavigationBarClient(): JSX.Element {
   const { user } = useUser();
 
   useEffect(() => {
