@@ -24,7 +24,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 // ----- Types -----
 import { InputsTypes } from "../types/inputs-types";
 import { NewInvoiceFormProps } from "../types/invoice-types";
+
+// ----- Clerk -----
 import { useUser } from "@clerk/nextjs";
+
+// ----- React -----
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -64,11 +68,12 @@ export function NewInvoiceForm({
       );
 
       if (!result.success) {
+        // TODO: You might want to show this error to the user via a toast or alert
         console.error(
           "Erreur lors de la création de la facture:",
           result.error
         );
-        // TODO: You might want to show this error to the user via a toast or alert
+
         return;
       }
 
