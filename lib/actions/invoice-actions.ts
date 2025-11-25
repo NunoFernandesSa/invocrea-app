@@ -112,7 +112,8 @@ export async function getInvoiceById(id: string): Promise<Invoice | null> {
     });
 
     if (!invoice) {
-      throw new Error("Invoice not found");
+      console.error(`Invoice with ID ${id} not found in database`);
+      // throw new Error("Invoice not found");
     }
 
     return invoice;

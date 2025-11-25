@@ -13,16 +13,22 @@ export default async function InvoiceDetails({ params }: InvoiceDetailsProps) {
     <Container>
       <GoBackButton href={`dashboard`} />
 
-      <div className="mt-10">
-        <h1>Invoice : {id}</h1>
-        <div className="">name: {invoice?.name}</div>
-        <div className="">
-          created at: {invoice?.createdAt.toLocaleDateString().toString()}
+      {invoice ? (
+        <div className="mt-10">
+          <h1>Invoice : {id}</h1>
+          <div className="">name: {invoice?.name}</div>
+          <div className="">
+            created at: {invoice?.createdAt.toLocaleDateString().toString()}
+          </div>
+          <div className="">
+            status: <StatusBadge status={invoice?.status.toString() || ""} />
+          </div>
         </div>
-        <div className="">
-          status: <StatusBadge status={invoice?.status.toString() || ""} />
+      ) : (
+        <div className="mt-10">
+          <div className="text-red-500">Invoice not found</div>
         </div>
-      </div>
+      )}
     </Container>
   );
 }
