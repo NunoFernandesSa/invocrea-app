@@ -1,4 +1,6 @@
+// ----- prisma -----
 import { prisma } from "@/lib/prisma";
+// ----- crypto -----
 import { randomBytes } from "crypto";
 
 /**
@@ -6,7 +8,9 @@ import { randomBytes } from "crypto";
  * This function will keep generating new IDs until it finds one that is not already in use in the database.
  * @returns {Promise<string>} A unique invoice ID.
  */
-export const generateUniqueInvoiceID = async () => {
+export const generateUniqueInvoiceID = async (): Promise<
+  string | undefined
+> => {
   let uniqueId;
   let isUnique: boolean = false;
 
