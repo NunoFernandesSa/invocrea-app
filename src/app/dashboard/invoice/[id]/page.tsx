@@ -1,14 +1,8 @@
 import Container from "@/src/components/common/Container";
 import GoBackButton from "@/src/components/features/invoices/GoBackButton";
-import { Button } from "@/src/components/shadcn/ui/button";
-import Link from "next/link";
-import { FaArrowLeft } from "react-icons/fa";
+import { InvoiceDetailsProps } from "@/src/types/invoice-details-props-types";
 
-export default async function InvoiceDetails({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function InvoiceDetails({ params }: InvoiceDetailsProps) {
   const { id } = await params;
 
   return (
