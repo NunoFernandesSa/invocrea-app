@@ -14,6 +14,7 @@ import { PencilLine } from "lucide-react";
 import { Eye } from "lucide-react";
 import StatusBadge from "./StatusBadge";
 import Link from "next/link";
+import { calculateTotalInvoice } from "@/src/utils/calculate-total-invoice";
 
 export default async function InvoiceCard() {
   const { userId } = await auth();
@@ -24,6 +25,7 @@ export default async function InvoiceCard() {
 
   const invoices = await getAllInvoicesByUserId(userId);
 
+  // if no invoices found return a message to create an invoice
   if (!invoices || invoices.length === 0) {
     return (
       <div className="w-full flex flex-col items-center justify-center py-12 text-center">
@@ -58,26 +60,34 @@ export default async function InvoiceCard() {
           <CardHeader className="pb-0 mb-1">
             <CardTitle className="flex items-center justify-between">
               {/* invoice total */}
-              <span className={`text-lg font-semibold`}>
-                {invoice.lines && invoice.lines.length > 0 ? (
+              <div className={`text-lg font-semibold`}>
+                <div className="flex justify-between text-sm">
+                  <span className="font-semibold text-white text-lg">
+                    {calculateTotalInvoice(invoice).totalTTC.toFixed(2)}
+                  </span>
+                  <span className="font-semibold text-white text-lg flex items-center ms-1">
+                    €
+                  </span>
+                </div>
+                {/* {invoice.lines && invoice.lines.length > 0 ? (
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground"></span>
+                    <span className="text-white"></span>
                     <span className="font-semibold">€</span>
                   </div>
                 ) : (
                   <div className="flex justify-between text-sm">
-                    <span className="font-semibold">€</span>
+                    <span className="font-semibold">--.-- €</span>
                   </div>
-                )}
-              </span>
+                )} */}
+              </div>
               {/* invoice status */}
-              <span className={`text-xs px-2 py-1 rounded-full`}>
+              <div className={`text-xs px-2 py-1 rounded-full`}>
                 <StatusBadge status={invoice.status.toString()} />
-              </span>
+              </div>
             </CardTitle>
 
             <CardDescription>
-              <span className="font-semibold">{invoice.id}</span>
+              <div className="font-semibold">{invoice.id}</div>
 
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground"> {invoice.name}</span>
