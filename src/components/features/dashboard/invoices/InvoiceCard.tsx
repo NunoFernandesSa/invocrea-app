@@ -22,10 +22,16 @@ export default async function InvoiceCard() {
     return null;
   }
 
-  const invoices = await getAllInvoicesByUserId(userId);
+  const response = await getAllInvoicesByUserId(userId);
+  const invoices = response.data;
 
   // if no invoices found return a message to create an invoice
-  if (!invoices || invoices.length === 0) {
+  if (
+    !invoices ||
+    invoices.length === 0 ||
+    !response.success ||
+    response === undefined
+  ) {
     return (
       <div className="w-full flex flex-col items-center justify-center py-12 text-center">
         <div className="text-muted-foreground mb-4">

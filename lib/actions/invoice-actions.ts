@@ -9,29 +9,29 @@ import { EmptyInvoice, Invoice } from "@/src/types/invoice-types";
  * @throws {Error} If the user is not found or if the invoice ID cannot be generated.
  * @param {string} userEmail - The email address of the user.
  * @param {string} invoiceName - The name of the new invoice.
- * @returns {Promise<Prisma.Invoice>>} A promise resolving to the newly created invoice.
+ * @returns {Promise<{ success: boolean; data?: EmptyInvoice; error?: string }>} A promise resolving to an object indicating success, data, or error.
  */
 export async function createEmptyInvoice(
   userEmail: string,
   invoiceName: string
-): Promise<EmptyInvoice> {
+): Promise<{ success: boolean; data?: EmptyInvoice; error?: string }> {
   try {
     const user = await prisma.user.findUnique({
       where: { email: userEmail },
     });
 
     if (!user) {
-      throw new Error("User not found");
+      return { success: false, error: "User not found" };
     }
 
     if (!user.id) {
-      throw new Error("User ID not found");
+      return { success: false, error: "User ID not found" };
     }
 
     const invoiceID = await generateUniqueInvoiceID();
 
     if (!invoiceID) {
-      throw new Error("Failed to generate invoice ID");
+      return { success: false, error: "Failed to generate invoice ID" };
     }
 
     const newInvoice = await prisma.invoice.create({
@@ -42,10 +42,10 @@ export async function createEmptyInvoice(
       },
     });
 
-    return newInvoice;
+    return { success: true, data: newInvoice };
   } catch (error) {
     console.error("Error creating empty invoice:", error);
-    throw error;
+    return { success: false, error: "Error creating empty invoice" + error };
   }
 }
 
@@ -53,13 +53,12 @@ export async function createEmptyInvoice(
  * Retrieves all invoices for a specific user from the database, including their associated lines.
  * @param {string} userId - The ID of the user whose invoices are to be retrieved.
  * @param {number} [limit] - Optional. The maximum number of invoices to retrieve.
- * @returns {Promise<Invoice[]>} A promise resolving to an array of invoices with their lines.
- * @throws {Error} If an error occurs during the database retrieval.
+ * @returns {Promise<{ success: boolean; data?: Invoice[]; error?: string }>} A promise resolving to an object indicating success, data (an array of invoices with lines), or an error message.
  */
 export async function getAllInvoicesByUserId(
   userId: string,
   limit?: number
-): Promise<Invoice[]> {
+): Promise<{ success: boolean; data?: Invoice[]; error?: string }> {
   try {
     const invoices = await prisma.invoice.findMany({
       where: { userId: userId },
@@ -71,7 +70,7 @@ export async function getAllInvoicesByUserId(
     });
 
     if (!invoices) {
-      throw new Error("Invoices not found");
+      return { success: false, error: "Invoices not found" };
     }
 
     // Update invoices status to 'Impayée' if due date is passed and invoice status is 'En Attente'
@@ -91,10 +90,13 @@ export async function getAllInvoicesByUserId(
       });
     }
 
-    return invoices;
+    return { success: true, data: invoices };
   } catch (error) {
     console.log("Error while trying retrieval invoices", error);
-    throw error;
+    return {
+      success: false,
+      error: "Error while trying retrieval invoices" + error,
+    };
   }
 }
 

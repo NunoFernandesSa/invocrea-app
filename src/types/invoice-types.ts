@@ -2,6 +2,9 @@ export type EmptyInvoice = {
   id: string;
   name: string;
   userId: string;
+  createdAt: Date;
+  updatedAt: Date | null;
+  error?: string;
 };
 
 export type NewInvoiceFormProps = {
