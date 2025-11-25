@@ -1,8 +1,16 @@
+// ----- clerk -----
 import { auth } from "@clerk/nextjs/server";
+// ----- next -----
 import { NextResponse } from "next/server";
+// ----- prisma -----
 import { prisma } from "@/lib/prisma";
 
-export async function POST(request: Request) {
+/**
+ * Syncs the user's information with the database.
+ * @param {Request} request - The request object containing the user's information.
+ * @returns {Promise<NextResponse>} The response object containing the user's information.
+ */
+export async function POST(request: Request): Promise<NextResponse> {
   const { userId } = await auth();
 
   if (!userId) {
@@ -10,7 +18,10 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { email, fullName } = await request.json();
+    const { email, fullName } = (await request.json()) as {
+      email: string;
+      fullName: string;
+    };
 
     const user = await prisma.user.upsert({
       where: { id: userId },
