@@ -25,14 +25,14 @@ export default async function InvoiceDetails({ params }: InvoiceDetailsProps) {
       <GoBackButton href={`dashboard`} />
 
       {invoice.success ? (
-        <div className="mt-10">
-          <h1>Invoice : {invoiceId}</h1>
-          <div className="">name: {invoiceName}</div>
-          <div className="">created at: {invoiceCreatedAt}</div>
+        <Card className="md:p-6 p-2 mt-10">
+          <h1 className="text-xl font-semibold">{invoiceId}</h1>
+          <div className="">{invoiceName}</div>
+          <div className="">{invoiceCreatedAt}</div>
           <div className="">
-            status: <StatusBadge status={invoiceStatus || ""} />
+            <StatusBadge status={invoiceStatus || ""} />
           </div>
-        </div>
+        </Card>
       ) : (
         <Card className="mt-10 flex flex-col items-center justify-center p-6 text-red-500">
           <CiWarning className="mb-3 h-10 w-10" />

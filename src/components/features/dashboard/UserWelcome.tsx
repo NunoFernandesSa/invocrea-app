@@ -1,6 +1,9 @@
 "use client";
 
+// ----- Clerk -----
 import { useUser } from "@clerk/nextjs";
+
+// ----- React -----
 import { JSX } from "react";
 
 /**

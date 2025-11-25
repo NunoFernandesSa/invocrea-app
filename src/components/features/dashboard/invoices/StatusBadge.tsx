@@ -1,5 +1,10 @@
+// ----- React -----
 import React from "react";
+
+// ----- shadcn -----
 import { Badge } from "@/src/components/shadcn/ui/badge";
+
+// ----- icons -----
 import { GoIssueClosed } from "react-icons/go";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { IoMdTime } from "react-icons/io";
@@ -7,7 +12,17 @@ import { BsSendExclamation } from "react-icons/bs";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { IoDocumentTextOutline } from "react-icons/io5";
 
-export default function StatusBadge({ status }: { status: string }) {
+/**
+ * StatusBadge component
+ * @param {Object} props
+ * @param {string} props.status
+ * @returns {JSX.Element}
+ */
+export default function StatusBadge({
+  status,
+}: {
+  status: string;
+}): JSX.Element {
   // Brouillon = 1, Envoyée = 2, Validée = 3, En Attente: 4, Payée = 5 , Annulée = 6, Impayée = 7
   switch (status) {
     case "1":

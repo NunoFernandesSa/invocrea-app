@@ -1,14 +1,29 @@
 "use client";
 
+// ----- Clerk -----
 import { SignIn, SignUp, useAuth } from "@clerk/nextjs";
+
+// ----- Next.js -----
 import { useRouter } from "next/navigation";
+
+// ----- React -----
 import { useEffect } from "react";
 
+/**
+ * AuthModalProps interface
+ * @interface AuthModalProps
+ * @property {"sign-in" | "sign-up"} mode - The mode for the AuthModal component
+ */
 interface AuthModalProps {
   mode: "sign-in" | "sign-up";
 }
 
-export function AuthModal({ mode }: AuthModalProps) {
+/**
+ * AuthModal component
+ * @param {AuthModalProps} props - The props for the AuthModal component
+ * @returns {JSX.Element}
+ */
+export function AuthModal({ mode }: AuthModalProps): JSX.Element {
   const router = useRouter();
   const { isSignedIn } = useAuth();
 

@@ -1,3 +1,4 @@
+// ----- custom components -----
 import Container from "./Container";
 
 /**
@@ -8,7 +9,7 @@ import Container from "./Container";
  *
  * @returns {JSX.Element} The footer component.
  */
-export default function Footer() {
+export default function Footer(): JSX.Element {
   return (
     <footer className="border-t border-border bg-card py-8">
       <Container>

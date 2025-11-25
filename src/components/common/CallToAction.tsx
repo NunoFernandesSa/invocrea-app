@@ -1,8 +1,17 @@
+// ----- custom components -----
 import Container from "./Container";
+
+// ----- Clerk -----
 import { SignedOut, SignUpButton } from "@clerk/nextjs";
+
+// ----- Shadcn -----
 import { Button } from "../shadcn/ui/button";
 
-export default function CallToAction() {
+/**
+ * Call to action component
+ * @returns {JSX.Element}
+ */
+export default function CallToAction(): JSX.Element {
   return (
     <section className="bg-linear-to-r from-primary/10 via-primary/5 to-primary/10 py-16">
       <Container className="text-center">

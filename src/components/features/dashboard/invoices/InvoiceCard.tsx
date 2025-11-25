@@ -1,4 +1,7 @@
+// ----- Clerk -----
 import { auth } from "@clerk/nextjs/server";
+
+// ----- shadcn/ui -----
 import {
   Card,
   CardDescription,
@@ -7,15 +10,27 @@ import {
   CardTitle,
 } from "@/src/components/shadcn/ui/card";
 import { Button } from "@/src/components/shadcn/ui/button";
+
+// ----- custom actions -----
 import { getAllInvoicesByUserId } from "@/lib/actions/invoice-actions";
 
 // ----- icons -----
 import { Eye } from "lucide-react";
+
+// ----- custo  m components -----
 import StatusBadge from "./StatusBadge";
+
+// ----- Next.js -----
 import Link from "next/link";
+
+// ----- custom utils -----
 import { calculateTotalInvoice } from "@/src/utils/calculate-total-invoice";
 
-export default async function InvoiceCard() {
+/**
+ * InvoiceCard component
+ * @returns { Promise<JSX.Element> | null}
+ */
+export default async function InvoiceCard(): Promise<JSX.Element | null> {
   const { userId } = await auth();
 
   if (!userId) {
