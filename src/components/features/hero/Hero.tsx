@@ -1,8 +1,20 @@
+// ----- React -----
+import React from "react";
+
+// ----- custom components -----
 import Container from "../../common/Container";
+
+// ----- Clerk -----
 import { SignedIn, SignedOut, SignUpButton } from "@clerk/nextjs";
+
+// ----- shadcn -----
 import { Button } from "../../shadcn/ui/button";
 
-export default function Hero() {
+/**
+ * Hero component for the landing page, displaying a call to action for invoice creation.
+ * @returns {JSX.Element} The Hero component.
+ */
+export default function Hero(): JSX.Element {
   return (
     <section className="h-[calc(100vh-200px)] border-b border-border bg-linear-to-b from-background via-background to-card/50 py-20">
       <Container className="h-full grid md:grid-cols-2 grid-cols-1 items-center gap-12">

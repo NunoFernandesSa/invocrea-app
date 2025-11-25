@@ -1,8 +1,17 @@
+// ----- React -----
 import React from "react";
+
+// ----- custom components -----
 import Container from "../../common/Container";
+
+// ----- constants -----
 import { features } from "@/src/constants/features";
 
-export default function Features() {
+/**
+ * Features component
+ * @returns {JSX.Element}
+ */
+export default function Features(): JSX.Element {
   return (
     <section className="border-b border-border py-16">
       <Container>
