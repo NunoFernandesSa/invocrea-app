@@ -72,6 +72,6 @@ export default function StatusBadge({ status }: { status: string }) {
         </Badge>
       );
     default:
-      return <Badge>Brouillon</Badge>;
+      return <Badge>A définir</Badge>;
   }
 }
