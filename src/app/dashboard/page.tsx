@@ -10,7 +10,7 @@ export default async function DashboardPage() {
     <Container>
       <UserWelcome />
 
-      <div className="p-6 rounded-lg shadow-md mt-6 bg-accent">
+      <div className="md:p-6 p-2 rounded-lg shadow-md mt-6 bg-accent">
         {/* add invoice button */}
         <div className="w-full mb-10 flex justify-center md:justify-start">
           <NewInvoiceForm createEmptyInvoiceAction={createEmptyInvoice} />

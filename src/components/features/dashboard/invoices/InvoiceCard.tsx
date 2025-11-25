@@ -10,7 +10,6 @@ import { Button } from "@/src/components/shadcn/ui/button";
 import { getAllInvoicesByUserId } from "@/lib/actions/invoice-actions";
 
 // ----- icons -----
-import { PencilLine } from "lucide-react";
 import { Eye } from "lucide-react";
 import StatusBadge from "./StatusBadge";
 import Link from "next/link";
