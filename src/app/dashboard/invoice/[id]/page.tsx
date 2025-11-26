@@ -1,48 +1,30 @@
-import { getInvoiceById } from "@/lib/actions/invoice-actions";
+"use client";
+
 import Container from "@/src/components/common/Container";
-import StatusBadge from "@/src/components/features/dashboard/invoices/StatusBadge";
 import GoBackButton from "@/src/components/features/invoices/GoBackButton";
-import { Card } from "@/src/components/shadcn/ui/card";
 import { InvoiceDetailsProps } from "@/src/types/invoice-details-props-types";
-import { CiWarning } from "react-icons/ci";
+import { Invoice } from "@/src/types/invoice-types";
+import { fetchInvoice } from "@/src/utils/fetch-invoice";
+import { useEffect, useState } from "react";
 
-export default async function InvoiceDetails({ params }: InvoiceDetailsProps) {
-  const { id } = await params;
+export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
+  const [invoice, setInvoice] = useState<Invoice | null>(null);
 
-  // get invoice by id
-  const invoice = await getInvoiceById(id);
+  useEffect(() => {
+    fetchInvoice(params).then((invoice) => setInvoice(invoice));
+  }, [params]);
 
-  // invoice infos for better display
-  const invoiceId = invoice?.data?.id;
-  const invoiceName = invoice?.data?.name;
-  const invoiceCreatedAt = invoice?.data?.createdAt
-    .toLocaleDateString()
-    .toString();
-  const invoiceStatus = invoice?.data?.status.toString();
+  if (!invoice) {
+    return <p>Loading...</p>;
+  }
 
-  return (
+  return invoice ? (
     <Container>
       <GoBackButton href={`dashboard`} />
 
-      {invoice.success ? (
-        <Card className="md:p-6 p-2 mt-10">
-          <h1 className="text-xl font-semibold">{invoiceId}</h1>
-          <div className="">{invoiceName}</div>
-          <div className="">{invoiceCreatedAt}</div>
-          <div className="">
-            <StatusBadge status={invoiceStatus || ""} />
-          </div>
-        </Card>
-      ) : (
-        <Card className="mt-10 flex flex-col items-center justify-center p-6 text-red-500">
-          <CiWarning className="mb-3 h-10 w-10" />
-          <h2 className="mb-2 text-xl font-semibold">Facture non trouvée!</h2>
-          <p className="text-center">
-            La facture avec l'ID "{id}" n'a pas pu être trouvée.
-          </p>
-          <p className="text-center">Veuillez vérifier l'ID et réessayer.</p>
-        </Card>
-      )}
+      <p>{invoice?.id}</p>
     </Container>
+  ) : (
+    <p>Invoice not found</p>
   );
 }
