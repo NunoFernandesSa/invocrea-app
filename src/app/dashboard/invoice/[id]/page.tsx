@@ -7,7 +7,7 @@ import { Invoice } from "@/src/types/invoice-types";
 import { fetchInvoice } from "@/src/utils/fetch-invoice";
 import { useEffect, useState } from "react";
 
-export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
+export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
   const [invoice, setInvoice] = useState<Invoice | null>(null);
   const [initialInvoice, setInitialInvoice] = useState<Invoice | null>(null);
   const [loading, setLoading] = useState(true);

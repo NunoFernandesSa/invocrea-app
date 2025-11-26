@@ -11,7 +11,7 @@ import { Suspense } from "react";
  * This is an asynchronous server component.
  * @returns {Promise<JSX.Element>} The Dashboard page component.
  */
-export default async function DashboardPage() {
+export default async function DashboardPage(): Promise<JSX.Element> {
   return (
     <Container>
       <UserWelcome />
