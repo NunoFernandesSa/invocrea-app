@@ -2,6 +2,7 @@
 
 import Container from "@/src/components/common/Container";
 import GoBackButton from "@/src/components/features/invoices/GoBackButton";
+import { Spinner } from "@/src/components/shadcn/ui/spinner";
 import { InvoiceDetailsProps } from "@/src/types/invoice-details-props-types";
 import { Invoice } from "@/src/types/invoice-types";
 import { fetchInvoice } from "@/src/utils/fetch-invoice";
@@ -39,8 +40,9 @@ export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
   if (loading) {
     return (
       <Container>
-        <div className="flex justify-center items-center min-h-40">
-          <p>Chargement...</p>
+        <div className="flex flex-col justify-center items-center min-h-40">
+          <Spinner className="size-8" />
+          <p className="text-center text-xs">Chargement...</p>
         </div>
       </Container>
     );
@@ -72,7 +74,7 @@ export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
 
       <div className="mt-6">
         <h1 className="text-2xl font-bold mb-4">Détails de la facture</h1>
-        <p className="text-lg">ID: {invoice.id}</p>
+        <p className="text-lg">Facture - {invoice.id}</p>
       </div>
     </Container>
   );
