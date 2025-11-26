@@ -9,22 +9,71 @@ import { useEffect, useState } from "react";
 
 export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
   const [invoice, setInvoice] = useState<Invoice | null>(null);
+  const [initialInvoice, setInitialInvoice] = useState<Invoice | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchInvoice(params).then((invoice) => setInvoice(invoice));
+    const loadInvoice = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const invoice = await fetchInvoice(params);
+        if (!invoice) {
+          setError("Facture non trouvée");
+          return;
+        }
+        setInvoice(invoice);
+        setInitialInvoice(invoice);
+        setLoading(false);
+      } catch (error) {
+        setError("Erreur lors du chargement de la facture.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadInvoice();
   }, [params]);
 
-  if (!invoice) {
-    return <p>Loading...</p>;
+  if (loading) {
+    return (
+      <Container>
+        <div className="flex justify-center items-center min-h-40">
+          <p>Chargement...</p>
+        </div>
+      </Container>
+    );
   }
 
-  return invoice ? (
+  if (!invoice) {
+    return (
+      <Container>
+        <GoBackButton href="dashboard" />
+        <div className="text-red-500 text-center mt-4">
+          Facture non trouvée.
+        </div>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container>
+        <GoBackButton href="dashboard" />
+        <div className="text-red-500 text-center mt-4">{error}</div>
+      </Container>
+    );
+  }
+
+  return (
     <Container>
       <GoBackButton href={`dashboard`} />
 
-      <p>{invoice?.id}</p>
+      <div className="mt-6">
+        <h1 className="text-2xl font-bold mb-4">Détails de la facture</h1>
+        <p className="text-lg">ID: {invoice.id}</p>
+      </div>
     </Container>
-  ) : (
-    <p>Invoice not found</p>
   );
 }
