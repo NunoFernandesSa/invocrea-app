@@ -3,6 +3,7 @@
 import Container from "@/src/components/common/Container";
 import GoBackButton from "@/src/components/features/invoices/GoBackButton";
 import { Badge } from "@/src/components/shadcn/ui/badge";
+import { Card } from "@/src/components/shadcn/ui/card";
 import {
   Select,
   SelectContent,
@@ -85,8 +86,8 @@ export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
     <Container>
       <GoBackButton href={`dashboard`} />
 
-      <div className="flex items-center justify-between">
-        <div className="mt-6">
+      <Card className="flex items-center justify-between p-2 md:p-6 mt-6">
+        <div className="">
           <h1 className="text-2xl font-bold mb-4">Détails de la facture</h1>
           <Badge className="text-md">Facture - {invoice.id}</Badge>
         </div>
@@ -115,7 +116,7 @@ export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
             </SelectContent>
           </Select>
         </div>
-      </div>
+      </Card>
     </Container>
   );
 }
