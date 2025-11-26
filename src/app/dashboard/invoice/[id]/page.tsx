@@ -84,13 +84,12 @@ export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
 
   return (
     <Container>
-      <GoBackButton href={`dashboard`} />
+      <GoBackButton href={`dashboard`} className="mb-6" />
 
-      <Card className="flex items-center justify-between p-2 md:p-6 mt-6">
-        <div className="">
-          <h1 className="text-2xl font-bold mb-4">Détails de la facture</h1>
-          <Badge className="text-md">Facture - {invoice.id}</Badge>
-        </div>
+      {/* invoice title and status */}
+      <h1 className="text-2xl font-bold my-4">Détails de la facture</h1>
+      <Card className="flex flex-col md:flex-row items-center justify-between p-2 md:p-6 mt-6 gap-3 md:gap-0">
+        <Badge className="text-md">Facture - {invoice.id}</Badge>
 
         <div className="">
           {/* select status for change invoice status */}
