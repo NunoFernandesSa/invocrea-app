@@ -3,6 +3,7 @@
 import Container from "@/src/components/common/Container";
 import GoBackButton from "@/src/components/features/invoices/GoBackButton";
 import { Badge } from "@/src/components/shadcn/ui/badge";
+import { Button } from "@/src/components/shadcn/ui/button";
 import { Card } from "@/src/components/shadcn/ui/card";
 import {
   Select,
@@ -19,6 +20,8 @@ import { Invoice } from "@/src/types/invoice-types";
 import { fetchInvoice } from "@/src/utils/fetch-invoice";
 import { getStatusLabel } from "@/src/utils/get-status-label";
 import { useCallback, useEffect, useState } from "react";
+import { BsSave, BsTrash } from "react-icons/bs";
+import { TfiSave } from "react-icons/tfi";
 
 export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
   const [invoice, setInvoice] = useState<Invoice | null>(null);
@@ -91,7 +94,7 @@ export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
       <Card className="flex flex-col md:flex-row items-center justify-between p-2 md:p-6 mt-6 gap-3 md:gap-0">
         <Badge className="text-md">Facture - {invoice.id}</Badge>
 
-        <div className="">
+        <div className="flex gap-3">
           {/* select status for change invoice status */}
           <Select>
             <SelectTrigger className="w-[180px]">
@@ -114,6 +117,18 @@ export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
               </SelectGroup>
             </SelectContent>
           </Select>
+
+          <Button className="bg-green-800 text-white hover:bg-green-900">
+            <TfiSave />
+          </Button>
+          <Button
+            variant={"destructive"}
+            onClick={() => {
+              alert("Veuillez confirmer la suppression");
+            }}
+          >
+            <BsTrash />
+          </Button>
         </div>
       </Card>
     </Container>
