@@ -137,7 +137,7 @@ export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
 
       <div className="flex w-full md:w-1/3 flex-col ">
         {/* invoice info */}
-        <InvoiceInfo invoice={invoice} />
+        <InvoiceInfo invoice={invoice} setInvoice={setInvoice} />
       </div>
 
       <div className="flex w-full md:w-2/3 flex-col "></div>

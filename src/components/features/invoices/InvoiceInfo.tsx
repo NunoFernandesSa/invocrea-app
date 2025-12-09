@@ -1,12 +1,8 @@
 import React from "react";
 import { Card } from "../../shadcn/ui/card";
-import { Invoice } from "@prisma/client";
 import { Input } from "../../shadcn/ui/input";
-
-interface InvoiceInfoProps {
-  invoice: Invoice;
-  setInvoice?: (invoice: Invoice) => void;
-}
+import { InvoiceInfoProps } from "@/src/types/invoice-info-type-props";
+import { Button } from "../../shadcn/ui/button";
 
 export default function InvoiceInfo({ invoice, setInvoice }: InvoiceInfoProps) {
   return (
@@ -28,6 +24,8 @@ export default function InvoiceInfo({ invoice, setInvoice }: InvoiceInfoProps) {
             value={invoice?.issuerAddress}
             className=""
           />
+
+          <Button onClick={() => {}}>Sauvegarder</Button>
         </div>
       </div>
     </Card>
