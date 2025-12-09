@@ -2,9 +2,9 @@
 
 import Container from "@/src/components/common/Container";
 import GoBackButton from "@/src/components/features/invoices/GoBackButton";
+import InvoiceInfo from "@/src/components/features/invoices/InvoiceInfo";
 import { Badge } from "@/src/components/shadcn/ui/badge";
 import { Button } from "@/src/components/shadcn/ui/button";
-import { Card } from "@/src/components/shadcn/ui/card";
 import {
   Select,
   SelectContent,
@@ -91,10 +91,11 @@ export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
 
       {/* invoice title and status */}
       <h1 className="text-2xl font-bold my-4">Détails de la facture</h1>
-      <Card className="flex flex-col md:flex-row items-center justify-between p-2 md:p-6 mt-6 gap-3 md:gap-0">
-        <Badge className="text-md">Facture - {invoice.id}</Badge>
 
-        <div className="flex gap-3">
+      {/* invoice title and actions */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex gap-2">
+          <Badge className="text-md">Facture - {invoice.id}</Badge>
           {/* select status for change invoice status */}
           <Select>
             <SelectTrigger className="w-[180px]">
@@ -117,20 +118,29 @@ export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
               </SelectGroup>
             </SelectContent>
           </Select>
+        </div>
 
+        <div className="flex gap-2">
           <Button className="bg-green-800 text-white hover:bg-green-900">
-            <TfiSave />
+            Sauvegarder <TfiSave />
           </Button>
           <Button
             variant={"destructive"}
             onClick={() => {
-              alert("Veuillez confirmer la suppression");
+              alert(`Voulez-vous vraiment supprimer la facture ${invoice.id}`);
             }}
           >
-            <BsTrash />
+            Supprimer <BsTrash />
           </Button>
         </div>
-      </Card>
+      </div>
+
+      <div className="flex w-full md:w-1/3 flex-col ">
+        {/* invoice info */}
+        <InvoiceInfo invoice={invoice} />
+      </div>
+
+      <div className="flex w-full md:w-2/3 flex-col "></div>
     </Container>
   );
 }
