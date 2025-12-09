@@ -89,13 +89,10 @@ export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
     <Container>
       <GoBackButton href={`dashboard`} className="mb-6" />
 
-      {/* invoice title and status */}
-      <h1 className="text-2xl font-bold my-4">Détails de la facture</h1>
-
-      {/* invoice title and actions */}
+      {/* invoice actions */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex gap-2">
-          <Badge className="text-md">Facture - {invoice.id}</Badge>
+          <Badge className="text-md">Facture {invoice.id}</Badge>
           {/* select status for change invoice status */}
           <Select>
             <SelectTrigger className="w-[180px]">
@@ -135,7 +132,7 @@ export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
         </div>
       </div>
 
-      <div className="flex w-full md:w-1/3 flex-col ">
+      <div className="flex w-full md:w-1/3 flex-col mt-6">
         {/* invoice info */}
         <InvoiceInfo invoice={invoice} setInvoice={setInvoice} />
       </div>

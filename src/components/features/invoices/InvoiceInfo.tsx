@@ -2,30 +2,58 @@ import React from "react";
 import { Card } from "../../shadcn/ui/card";
 import { Input } from "../../shadcn/ui/input";
 import { InvoiceInfoProps } from "@/src/types/invoice-info-type-props";
-import { Button } from "../../shadcn/ui/button";
+import { Badge } from "../../shadcn/ui/badge";
 
-export default function InvoiceInfo({ invoice, setInvoice }: InvoiceInfoProps) {
+export default function InvoiceInfo({ invoice }: InvoiceInfoProps) {
   return (
-    <Card className="flex flex-col gap-6 p-6 mt-6 h-fit">
-      <div className="py-6">
-        <p className="text-lg font-semibold mb-3">Informations de l'émetteur</p>
+    <Card className="flex flex-col h-fit px-2 md:px-6">
+      <div className="space-y-6 py-6">
+        <Badge variant="secondary" className="text-lg font-semibold mb-3">
+          Informations de l'émetteur
+        </Badge>
 
         <div className="flex flex-wrap items-center justify-between gap-3">
           <Input
             type="text"
             placeholder="Nom de l'émetteur"
             value={invoice?.issuerName}
-            className=""
+            onChange={(e) => {}}
+            className="w-full"
+            required
           />
 
           <Input
             type="text"
             placeholder="Adresse de l'émetteur"
             value={invoice?.issuerAddress}
-            className=""
+            onChange={(e) => {}}
+            className="w-full"
+            required
+          />
+        </div>
+
+        <Badge variant="secondary" className="text-lg font-semibold mb-3">
+          Informations du client
+        </Badge>
+
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <Input
+            type="text"
+            placeholder="Nom du client"
+            value={invoice?.clientName}
+            onChange={(e) => {}}
+            className="w-full"
+            required
           />
 
-          <Button onClick={() => {}}>Sauvegarder</Button>
+          <Input
+            type="text"
+            placeholder="Adresse du client"
+            value={invoice?.clientAddress}
+            onChange={(e) => {}}
+            className="w-full"
+            required
+          />
         </div>
       </div>
     </Card>
