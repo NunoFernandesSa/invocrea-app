@@ -10,11 +10,20 @@ import { ArrowBigLeft } from "lucide-react";
  * @example
  * <BackButton linkTo="/dashboard/invoice" />
  */
-export default function BackButton({ linkTo }: { linkTo: string }) {
+export default function BackButton({
+  linkTo,
+}: {
+  linkTo: string;
+}): JSX.Element {
   return (
     <Link href={linkTo} className="text-primary underline mr-4">
-      <Button variant="default" size={"sm"} className="cursor-pointer">
-        <ArrowBigLeft className="mr-2" />
+      <Button
+        variant="default"
+        size={"sm"}
+        className="cursor-pointer flex items-center"
+      >
+        <ArrowBigLeft className="" />
+        <span>retour</span>
       </Button>
     </Link>
   );

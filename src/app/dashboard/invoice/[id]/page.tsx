@@ -1,7 +1,8 @@
 "use client";
 
+import BackButton from "@/src/components/common/BackButton";
 import Container from "@/src/components/common/Container";
-// import GoBackButton from "@/src/components/features/invoices/GoBackButton";
+import Section from "@/src/components/common/Section";
 import InvoiceInfo from "@/src/components/features/invoices/InvoiceInfo";
 import { Badge } from "@/src/components/shadcn/ui/badge";
 import { Button } from "@/src/components/shadcn/ui/button";
@@ -87,57 +88,61 @@ export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
 
   return (
     <Container>
-      {/* <GoBackButton href={`dashboard`} className="mb-6" /> */}
+      <Section className="bg-transparent">
+        <BackButton linkTo={`/dashboard/invoice`} />
 
-      {/* invoice actions */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex gap-2">
-          <Badge className="text-md">Facture {invoice.id}</Badge>
-          {/* select status for change invoice status */}
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue
-                placeholder={getStatusLabel(invoice.status.toString())}
-              />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel className="mb-2 text-muted-foreground font-light">
-                  État de la facture
-                </SelectLabel>
-                <SelectItem value="1">Brouillon</SelectItem>
-                <SelectItem value="2">Envoyée</SelectItem>
-                <SelectItem value="3">Validée</SelectItem>
-                <SelectItem value="4">En attente</SelectItem>
-                <SelectItem value="5">Payée</SelectItem>
-                <SelectItem value="6">Annulée</SelectItem>
-                <SelectItem value="7">Impayée</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+        {/* invoice actions */}
+        <div className="flex flex-wrap items-center justify-between gap-3 mt-6">
+          <div className="flex gap-2">
+            <Badge className="text-md">Facture {invoice.id}</Badge>
+            {/* select status for change invoice status */}
+            <Select>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue
+                  placeholder={getStatusLabel(invoice.status.toString())}
+                />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel className="mb-2 text-muted-foreground font-light">
+                    État de la facture
+                  </SelectLabel>
+                  <SelectItem value="1">Brouillon</SelectItem>
+                  <SelectItem value="2">Envoyée</SelectItem>
+                  <SelectItem value="3">Validée</SelectItem>
+                  <SelectItem value="4">En attente</SelectItem>
+                  <SelectItem value="5">Payée</SelectItem>
+                  <SelectItem value="6">Annulée</SelectItem>
+                  <SelectItem value="7">Impayée</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="flex gap-2">
+            <Button className="bg-green-800 text-white hover:bg-green-900">
+              Sauvegarder <TfiSave />
+            </Button>
+            <Button
+              variant={"destructive"}
+              onClick={() => {
+                alert(
+                  `Voulez-vous vraiment supprimer la facture ${invoice.id}`
+                );
+              }}
+            >
+              Supprimer <BsTrash />
+            </Button>
+          </div>
         </div>
 
-        <div className="flex gap-2">
-          <Button className="bg-green-800 text-white hover:bg-green-900">
-            Sauvegarder <TfiSave />
-          </Button>
-          <Button
-            variant={"destructive"}
-            onClick={() => {
-              alert(`Voulez-vous vraiment supprimer la facture ${invoice.id}`);
-            }}
-          >
-            Supprimer <BsTrash />
-          </Button>
+        <div className="flex w-full md:w-1/3 flex-col mt-6">
+          {/* invoice info */}
+          <InvoiceInfo invoice={invoice} setInvoice={setInvoice} />
         </div>
-      </div>
 
-      <div className="flex w-full md:w-1/3 flex-col mt-6">
-        {/* invoice info */}
-        <InvoiceInfo invoice={invoice} setInvoice={setInvoice} />
-      </div>
-
-      <div className="flex w-full md:w-2/3 flex-col "></div>
+        <div className="flex w-full md:w-2/3 flex-col "></div>
+      </Section>
     </Container>
   );
 }
