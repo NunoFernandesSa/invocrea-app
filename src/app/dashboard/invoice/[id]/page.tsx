@@ -1,7 +1,7 @@
 "use client";
 
 import Container from "@/src/components/common/Container";
-import GoBackButton from "@/src/components/features/invoices/GoBackButton";
+// import GoBackButton from "@/src/components/features/invoices/GoBackButton";
 import InvoiceInfo from "@/src/components/features/invoices/InvoiceInfo";
 import { Badge } from "@/src/components/shadcn/ui/badge";
 import { Button } from "@/src/components/shadcn/ui/button";
@@ -20,7 +20,7 @@ import { Invoice } from "@/src/types/invoice-types";
 import { fetchInvoice } from "@/src/utils/fetch-invoice";
 import { getStatusLabel } from "@/src/utils/get-status-label";
 import { useCallback, useEffect, useState } from "react";
-import { BsSave, BsTrash } from "react-icons/bs";
+import { BsTrash } from "react-icons/bs";
 import { TfiSave } from "react-icons/tfi";
 
 export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
@@ -87,7 +87,7 @@ export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
 
   return (
     <Container>
-      <GoBackButton href={`dashboard`} className="mb-6" />
+      {/* <GoBackButton href={`dashboard`} className="mb-6" /> */}
 
       {/* invoice actions */}
       <div className="flex flex-wrap items-center justify-between gap-3">

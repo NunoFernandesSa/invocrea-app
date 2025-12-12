@@ -5,17 +5,14 @@ import { auth } from "@clerk/nextjs/server";
 import {
   Card,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/src/components/shadcn/ui/card";
-import { Button } from "@/src/components/shadcn/ui/button";
 
 // ----- custom actions -----
 import { getAllInvoicesByUserId } from "@/lib/actions/invoice-actions";
 
 // ----- icons -----
-import { Eye } from "lucide-react";
 import { IoTimeOutline } from "react-icons/io5";
 import { CiFileOn } from "react-icons/ci";
 
