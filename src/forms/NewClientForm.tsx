@@ -16,12 +16,17 @@ interface NewClientFormProps {
 
 export default function NewClientForm({ onSuccess }: NewClientFormProps) {
   const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [address, setAddress] = React.useState("");
+  const [phone, setPhone] = React.useState("");
+  const [siret, setSiret] = React.useState("");
+
   const [error, setError] = React.useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validation simple : vérifier si le nom est vide
+    // TODO: Add more validation as needed
     if (name.trim() === "" || name.length < 2) {
       setError("Le nom du client est requis. Minimum 2 caractères.");
       console.error("Le nom du client est requis.");
@@ -51,10 +56,9 @@ export default function NewClientForm({ onSuccess }: NewClientFormProps) {
         </DialogDescription>
       </DialogHeader>
 
-      <div className="grid gap-4">
+      <div className="grid gap-2">
         {/* ----- name ----- */}
-        <div className="grid gap-3">
-          <Label htmlFor="client-name">Nom du client</Label>
+        <div className="grid gap-1">
           <Input
             id="client-name"
             placeholder="Nom du client"
@@ -67,9 +71,69 @@ export default function NewClientForm({ onSuccess }: NewClientFormProps) {
             {error}
           </span>
         </div>
+
+        {/* ----- email ----- */}
+        <div className="grid gap-1">
+          <Input
+            id="client-email"
+            placeholder="Email du client"
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <span className="text-xs text-red-300">
+            {/* TODO: add error message */}
+            {error}
+          </span>
+        </div>
+
+        {/* ----- address ----- */}
+        <div className="grid gap-1">
+          <Input
+            id="client-address"
+            placeholder="Address du client"
+            type="text"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+          <span className="text-xs text-red-300">
+            {/* TODO: add error message */}
+            {error}
+          </span>
+        </div>
+
+        {/* ----- phone ----- */}
+        <div className="grid gap-1">
+          <Input
+            id="client-phone"
+            placeholder="Téléphone du client"
+            type="text"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+          <span className="text-xs text-red-300">
+            {/* TODO: add error message */}
+            {error}
+          </span>
+        </div>
+
+        {/* ----- siret ----- */}
+        <div className="grid gap-1">
+          <Input
+            id="client-siret"
+            placeholder="SIRET du client"
+            type="text"
+            value={siret}
+            onChange={(e) => setSiret(e.target.value)}
+          />
+          <span className="text-xs text-red-300">
+            {/* TODO: add error message */}
+            {error}
+          </span>
+        </div>
       </div>
 
-      <DialogFooter className="mt-3">
+      <DialogFooter className="flex flex-wrap gap-3 mt-3">
         <DialogClose asChild>
           <Button variant="outline">Annuler</Button>
         </DialogClose>
