@@ -15,6 +15,9 @@ import { JSX } from "react";
  *
  * @param {{ text: string }} Props for the UserWelcome component.
  * @returns {JSX.Element} The welcome message component.
+ *
+ * @example
+ * <UserWelcome text="Welcome to InvocreaApp" />
  */
 export default function UserWelcome({ text }: { text: string }): JSX.Element {
   const user = useUser();

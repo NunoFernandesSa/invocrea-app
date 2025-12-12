@@ -1,8 +1,7 @@
 import Container from "@/src/components/common/Container";
+import GoToLink from "@/src/components/common/GoToLink";
+import Section from "@/src/components/common/Section";
 import UserWelcome from "@/src/components/features/dashboard/UserWelcome";
-import { Button } from "@/src/components/shadcn/ui/button";
-import { Card } from "@/src/components/shadcn/ui/card";
-import Link from "next/link";
 import { BsEye } from "react-icons/bs";
 
 export default async function DashboardPage(): Promise<JSX.Element> {
@@ -10,13 +9,20 @@ export default async function DashboardPage(): Promise<JSX.Element> {
     <Container>
       <UserWelcome text="Ceci est votre Dashboard où vous pouvez gérer vos factures." />
 
-      <div className="md:p-6 p-2 rounded-lg shadow-md mt-6 bg-accent">
-        <Link href="/dashboard/invoice" className="text-primary underline">
-          <Button variant={"default"}>
-            Mes factures <BsEye className="ml-2" />
-          </Button>
-        </Link>
-      </div>
+      <Section>
+        <div className="flex gap-3 flex-wrap items-center">
+          <GoToLink
+            text="Mes factures"
+            icon={<BsEye />}
+            href="/dashboard/invoice"
+          />
+          <GoToLink
+            text="Mes clients"
+            icon={<BsEye />}
+            href="/dashboard/client"
+          />
+        </div>
+      </Section>
     </Container>
   );
 }
