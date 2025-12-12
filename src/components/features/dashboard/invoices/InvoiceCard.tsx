@@ -16,8 +16,10 @@ import { getAllInvoicesByUserId } from "@/lib/actions/invoice-actions";
 
 // ----- icons -----
 import { Eye } from "lucide-react";
+import { IoTimeOutline } from "react-icons/io5";
+import { CiFileOn } from "react-icons/ci";
 
-// ----- custo  m components -----
+// ----- custom components -----
 import StatusBadge from "./StatusBadge";
 
 // ----- Next.js -----
@@ -78,55 +80,52 @@ export default async function InvoiceCard(): Promise<JSX.Element | null> {
       {invoices.map((invoice) => (
         <Card key={invoice.id.toString()} className="w-auto">
           <CardHeader className="pb-0 mb-1">
-            <CardTitle className="flex items-center justify-between">
-              {/* invoice total */}
-              <div className={`text-lg font-semibold`}>
-                <div className="flex justify-between text-sm">
-                  <span className="font-semibold text-white text-lg">
-                    {calculateTotalInvoice(invoice).totalTTC.toFixed(2)}
-                  </span>
-                  <span className="font-semibold text-white text-lg flex items-center ms-1">
-                    €
-                  </span>
-                </div>
-                {/* {invoice.lines && invoice.lines.length > 0 ? (
-                  <div className="flex justify-between text-sm">
-                    <span className="text-white"></span>
-                    <span className="font-semibold">€</span>
-                  </div>
-                ) : (
-                  <div className="flex justify-between text-sm">
-                    <span className="font-semibold">--.-- €</span>
-                  </div>
-                )} */}
+            <CardTitle className="">
+              <div className="flex items-center gap-3 mb-2">
+                {/* invoice id */}
+                <Link
+                  href={`/dashboard/invoice/${invoice.id}`}
+                  className="hover:underline hover:text-muted-foreground ease-in-out duration-200"
+                  title="Voir détail de la facture"
+                >
+                  <p className="font-semibold text-lg flex items-center gap-1">
+                    <CiFileOn />
+                    {invoice.id}
+                  </p>
+                </Link>
+                {/* invoice status */}
+                <span className={`text-xs px-2 py-1 rounded-full`}>
+                  <StatusBadge status={invoice.status.toString()} />
+                </span>
               </div>
-              {/* invoice status */}
-              <div className={`text-xs px-2 py-1 rounded-full`}>
-                <StatusBadge status={invoice.status.toString()} />
+
+              <p className="text-muted-foreground mb-2 text-sm">
+                {invoice.clientName}
+              </p>
+
+              <div className="">
+                {/* invoice creation date */}
+                <span className="text-muted-foreground flex items-center gap-1 text-sm">
+                  <IoTimeOutline />
+                  {invoice.createdAt.toISOString().split("T")[0]}
+                </span>
               </div>
             </CardTitle>
 
             <CardDescription>
-              <div className="font-semibold">{invoice.id}</div>
-
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground"> {invoice.name}</span>
-              </div>
-
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">{invoice.dueDate}</span>
+              {/* invoice total */}
+              <div className={`text-lg font-semibold`}>
+                <div className="flex items-center text-sm">
+                  <span className="font-semibold text-muted-foreground text-lg">
+                    {calculateTotalInvoice(invoice).totalTTC.toFixed(2)}
+                  </span>
+                  <span className="font-semibold text-muted-foreground text-lg flex items-center ms-1">
+                    €
+                  </span>
+                </div>
               </div>
             </CardDescription>
           </CardHeader>
-
-          <CardFooter className="flex justify-end gap-2 pt-0 mt-0">
-            {/* view invoice details */}
-            <Link href={`/dashboard/invoice/${invoice.id}`}>
-              <Button variant="outline" size="icon">
-                <Eye />
-              </Button>
-            </Link>
-          </CardFooter>
         </Card>
       ))}
     </>
