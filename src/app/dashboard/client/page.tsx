@@ -1,15 +1,27 @@
+"use client";
+
 import BackButton from "@/src/components/common/BackButton";
 import Container from "@/src/components/common/Container";
 import Section from "@/src/components/common/Section";
+import NewClientButton from "@/src/components/features/clients/NewClientButton";
 import React from "react";
 
-export default function CleintsPage() {
+export default function ClientsPage() {
+  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+
   return (
     <Container>
       <Section>
-        <BackButton linkTo="/dashboard" />
+        <div className="w-full mb-10 flex items-center justify-center md:justify-start">
+          <BackButton linkTo="/dashboard" />
+
+          <NewClientButton
+            isOpen={isDialogOpen}
+            setIsOpen={setIsDialogOpen}
+            newClientForm={<></>}
+          />
+        </div>
       </Section>
-      <h1>Mes clients</h1>
     </Container>
   );
 }
