@@ -21,26 +21,31 @@ model User {
 }
 
 model Invoice {
-  id            String        @id
-  name          String
-  issuerName    String        @default("")
-  issuerAddress String        @default("")
-  clientName    String        @default("")
-  clientAddress String        @default("")
-  invoiceDate   String        @default("")
-  dueDate       String        @default("")
-  vatActive     Boolean       @default(false)
-  vatRate       Float         @default(20)
-  status        Int           @default(1) // Brouillon = 1, Envoyée = 2, En attente = 3, Validée = 4, Payée = 5 , Annulée = 6, Impayée = 7
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime?     @updatedAt
-  lines         InvoiceLine[] @relation("InvoiceLines")
+  id                  String    @id
+  name                String
+  issuerName          String    @default("")
+  issuerAddress       String    @default("")
+  clientName          String    @default("")
+  clientAddress       String    @default("")
+  invoiceDate         String    @default("")
+  dueDate             String    @default("")
+  vatActive           Boolean   @default(false)
+  vatRate             Float     @default(20)
+  status              Int       @default(1) // Brouillon = 1, Envoyée = 2, En attente = 3, Validée = 4, Payée = 5 , Annulée = 6, Impayée = 7
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime? @updatedAt
+  paymentTerms        String    @default("")
+  paymentMethod       String    @default("")
+  latePaymentInterest String    @default("")
+  comments            String    @default("")
+
+  lines InvoiceLine[] @relation("InvoiceLines")
 
   userId      String
   createdById User   @relation("UserInvoices", fields: [userId], references: [id], onDelete: Cascade)
 
   clientId String?
-  client   Client? @relation("ClientInvoices", fields: [clientId], references: [id], onDelete: SetNull) // SetNull car c'est optionnel
+  client   Client? @relation("ClientInvoices", fields: [clientId], references: [id])
 
   @@map("invoices")
 }

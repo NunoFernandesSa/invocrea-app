@@ -81,7 +81,7 @@ export default async function InvoiceCard(): Promise<JSX.Element | null> {
         <Card key={invoice.id.toString()} className="w-auto">
           <CardHeader className="pb-0 mb-1">
             <CardTitle className="">
-              <div className="flex items-center gap-3 mb-2">
+              <div className="flex items-center justify-between gap-3 mb-2">
                 {/* invoice id */}
                 <Link
                   href={`/dashboard/invoice/${invoice.id}`}
@@ -98,23 +98,19 @@ export default async function InvoiceCard(): Promise<JSX.Element | null> {
                   <StatusBadge status={invoice.status.toString()} />
                 </span>
               </div>
-
+            </CardTitle>
+            <CardDescription>
+              {/* invoice client name */}
               <p className="text-muted-foreground mb-2 text-sm">
                 {invoice.clientName}
               </p>
-
-              <div className="">
+              <div className="flex items-center justify-between gap-6">
                 {/* invoice creation date */}
                 <span className="text-muted-foreground flex items-center gap-1 text-sm">
                   <IoTimeOutline />
                   {invoice.createdAt.toISOString().split("T")[0]}
                 </span>
-              </div>
-            </CardTitle>
-
-            <CardDescription>
-              {/* invoice total */}
-              <div className={`text-lg font-semibold`}>
+                {/* invoice total */}
                 <div className="flex items-center text-sm">
                   <span className="font-semibold text-muted-foreground text-lg">
                     {calculateTotalInvoice(invoice).totalTTC.toFixed(2)}
