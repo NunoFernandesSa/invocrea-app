@@ -4,6 +4,7 @@ import BackButton from "@/src/components/common/BackButton";
 import Container from "@/src/components/common/Container";
 import Section from "@/src/components/common/Section";
 import NewClientButton from "@/src/components/features/clients/NewClientButton";
+import NewClientForm from "@/src/forms/NewClientForm";
 import React from "react";
 
 export default function ClientsPage() {
@@ -18,7 +19,9 @@ export default function ClientsPage() {
           <NewClientButton
             isOpen={isDialogOpen}
             setIsOpen={setIsDialogOpen}
-            newClientForm={<></>}
+            newClientForm={
+              <NewClientForm onSuccess={() => setIsDialogOpen(false)} />
+            }
           />
         </div>
       </Section>
