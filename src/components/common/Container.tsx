@@ -5,6 +5,10 @@ import { ContainerPropsType } from "@/src/types/container-types";
  * Container component
  * @param {ContainerPropsType} props - The props for the Container component
  * @returns {JSX.Element}
+ * @example
+ * <Container className="my-container-class">
+ *   <p>This is some content inside the container.</p>
+ * </Container>
  */
 export default function Container({
   children,

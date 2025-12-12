@@ -17,6 +17,8 @@ import { IoDocumentTextOutline } from "react-icons/io5";
  * @param {Object} props
  * @param {string} props.status
  * @returns {JSX.Element}
+ * @example
+ * <StatusBadge status="1" />
  */
 export default function StatusBadge({
   status,

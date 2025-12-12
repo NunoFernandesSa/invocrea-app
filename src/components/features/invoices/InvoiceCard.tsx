@@ -27,7 +27,8 @@ import { calculateTotalInvoice } from "@/src/utils/calculate-total-invoice";
 
 /**
  * InvoiceCard component
- * @returns { Promise<JSX.Element> | null}
+ * Displays a card with a list of invoices belonging to a specific user
+ * @returns { Promise<JSX.Element> | null } - A JSX element representing the invoice card, or null if no invoices are found
  */
 export default async function InvoiceCard(): Promise<JSX.Element | null> {
   const { userId } = await auth();

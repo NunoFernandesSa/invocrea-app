@@ -9,7 +9,7 @@ import { Button } from "../shadcn/ui/button";
 
 /**
  * Call to action component
- * @returns {JSX.Element}
+ * @returns {JSX.Element} - A JSX element representing the call to action component.
  */
 export default function CallToAction(): JSX.Element {
   return (

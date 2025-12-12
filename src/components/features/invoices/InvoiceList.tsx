@@ -3,7 +3,10 @@ import InvoiceCard from "./InvoiceCard";
 
 /**
  * InvoiceList component
- * @returns {JSX.Element}
+ *
+ * A component to display a list of invoices
+ *
+ * @returns {JSX.Element} The InvoiceList component
  */
 export default function InvoiceList(): JSX.Element {
   return (
