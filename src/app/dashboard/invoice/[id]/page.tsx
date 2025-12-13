@@ -68,7 +68,7 @@ export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
   if (error) {
     return (
       <Container>
-        <GoBackButton href="dashboard" />
+        <BackButton linkTo="/dashboard" />
         <div className="text-red-500 text-center mt-4">{error}</div>
       </Container>
     );
@@ -78,7 +78,7 @@ export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
   if (!invoice) {
     return (
       <Container>
-        <GoBackButton href="dashboard" />
+        <BackButton linkTo={`/dashboard/invoice`} />
         <div className="text-red-500 text-center mt-4">
           Facture non trouvée.
         </div>
