@@ -1,16 +1,26 @@
 import React from "react";
-import { Card } from "../../shadcn/ui/card";
-import GoToLink from "../../common/GoToLink";
-import { BsEye } from "react-icons/bs";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../../shadcn/ui/card";
 
 export default function LatePaymentInvoiceCard() {
   return (
-    <Card className="flex flex-col gap-3 items-start justify-center p-3 md:p-6">
-      <p className="text-3xl font-bold">....</p>
-      <div className="flex w-full items-center justify-between">
-        <p className="text-lg font-semibold">....</p>
-        <GoToLink text="" icon={<BsEye />} href="/dashboard/client" />
-      </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>
+          <p className="text-3xl font-bold text-red-500">00.00 €</p>
+        </CardTitle>
+      </CardHeader>
+
+      <CardContent>
+        <CardDescription>
+          <p className="text-lg font-semibold">Retard de paiement</p>
+        </CardDescription>
+      </CardContent>
     </Card>
   );
 }

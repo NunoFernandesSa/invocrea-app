@@ -10,10 +10,16 @@ import { GoToLinkPropsType } from "@/src/types/go-to-link-props-type";
  * @example
  * <GoToLink text="Mes factures" icon={<BsEye />} href="/dashboard/invoice" />
  */
-export default function GoToLink({ text, icon, href }: GoToLinkPropsType) {
+export default function GoToLink({
+  text,
+  icon,
+  href,
+  variant,
+  size,
+}: GoToLinkPropsType): JSX.Element {
   return (
     <Link href={href} className="text-primary underline">
-      <Button variant={"default"}>
+      <Button variant={variant} size={size}>
         {text} {icon}
       </Button>
     </Link>

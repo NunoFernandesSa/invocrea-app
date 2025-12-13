@@ -7,19 +7,18 @@ import {
   CardTitle,
 } from "../../shadcn/ui/card";
 
-export default function TotalRevenueInvoicesCard() {
+export default function InvoicePaidCard() {
   return (
     <Card>
       <CardHeader>
         <CardTitle>
-          <p className="text-3xl font-bold text-green-500">00.00 €</p>
+          <p className="text-3xl font-bold">0</p>
         </CardTitle>
       </CardHeader>
 
       <CardContent>
         <CardDescription>
-          <p className="text-lg font-semibold">Chiffre d'affaires total</p>
-          {/* TODO: Add graph with data */}
+          <p className="text-lg font-semibold">Facture encaissée</p>
         </CardDescription>
       </CardContent>
     </Card>

@@ -1,7 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Card } from "../../shadcn/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../../shadcn/ui/card";
 import GoToLink from "../../common/GoToLink";
 import { BsEye } from "react-icons/bs";
 import { useUser } from "@clerk/nextjs";
@@ -15,12 +21,20 @@ export default function ClientsCountCard() {
   useEffect(() => {}, [user]);
 
   return (
-    <Card className="flex flex-col gap-3 items-start justify-center p-3 md:p-6">
-      <p className="text-3xl font-bold">{clientsLenght ? clientsLenght : 0}</p>
-      <div className="flex w-full items-center justify-between">
-        <p className="text-lg font-semibold">Clients</p>
-        <GoToLink text="" icon={<BsEye />} href="/dashboard/client" />
-      </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>
+          <p className="text-3xl font-bold">
+            {clientsLenght ? clientsLenght : 0}
+          </p>
+        </CardTitle>
+      </CardHeader>
+
+      <CardContent>
+        <CardDescription>
+          <p className="text-lg font-semibold">Clients</p>
+        </CardDescription>
+      </CardContent>
     </Card>
   );
 }
