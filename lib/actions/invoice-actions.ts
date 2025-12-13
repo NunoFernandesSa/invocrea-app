@@ -3,6 +3,9 @@
 import { generateUniqueInvoiceID } from "@/src/utils/generate-unique-invoice-id";
 import { prisma } from "../prisma";
 import { EmptyInvoice, Invoice } from "@/src/types/invoice-types";
+import { serverCache } from "../server-cache";
+import { getCached } from "@/src/helpers/getCached";
+import { Result } from "@/src/types/result-props-types";
 
 /**
  * Creates a new empty invoice and associates it with the given user.
@@ -42,6 +45,13 @@ export async function createEmptyInvoice(
       },
     });
 
+    // delete cache for all invoices of the user
+    serverCache.deleteByPattern(`invoices:user:${user.id}`);
+    serverCache.deleteByPattern(`invoices:user:${userEmail}`);
+
+    // delete cache for specific invoice if exists
+    serverCache.delete(`invoice:${invoiceID}`);
+
     return { success: true, data: newInvoice };
   } catch (error) {
     console.error("Error creating empty invoice:", error);
@@ -50,47 +60,74 @@ export async function createEmptyInvoice(
 }
 
 /**
- * Retrieves all invoices for a specific user from the database, including their associated lines.
- * @param {string} userId - The ID of the user whose invoices are to be retrieved.
- * @param {number} [limit] - Optional. The maximum number of invoices to retrieve.
- * @returns {Promise<{ success: boolean; data?: Invoice[]; error?: string }>} A promise resolving to an object indicating success, data (an array of invoices with lines), or an error message.
+ * Retrieves all invoices for a given user id, with an optional limit.
+ * First, it will try to retrieve the invoices from the cache.
+ * If the cache is empty, it will fetch the invoices from the database.
+ * If the invoices are found, it will update the status of the invoices if needed.
+ * Finally, it will return the invoices in the success response.
+ * @param {string} userId - The id of the user.
+ * @param {number} [limit] - The limit of invoices to retrieve.
+ * @returns {Promise<{ success: boolean; data?: Invoice[]; error?: string }}>}
+ * @example
+ * getAllInvoicesByUserId("userId123", 10);
  */
 export async function getAllInvoicesByUserId(
   userId: string,
   limit?: number
 ): Promise<{ success: boolean; data?: Invoice[]; error?: string }> {
   try {
-    const invoices = await prisma.invoice.findMany({
-      where: { userId: userId },
-      include: { lines: true },
-      take: limit,
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+    // create a unique cache key based on userId and limit
+    const cacheKey = limit
+      ? `invoices:user:${userId}:limit:${limit}`
+      : `invoices:user:${userId}`;
 
-    if (!invoices) {
-      return { success: false, error: "Invoices not found" };
-    }
+    // use helper to get from cache or fetch from DB
+    const invoices = await getCached<Result<Invoice[]>>(
+      cacheKey,
+      async () => {
+        console.log(`🔄 Get from DB for ${cacheKey}`);
 
-    // Update invoices status to 'Impayée' if due date is passed and invoice status is 'En Attente'
-    // Brouillon = 1, Envoyée = 2, Validée = 3, En Attente: 4, Payée = 5 , Annulée = 6, Impayée = 7
-    if (invoices) {
-      const today = new Date();
-      invoices.map(async (invoice: any) => {
-        const dueDate = new Date(invoice.dueDate);
-        if (dueDate < today && invoice.status === 4) {
-          const updatedInvoice = await prisma.invoice.update({
-            where: { id: invoice.id },
-            data: { status: 7 },
-            include: { lines: true },
-          });
-          return updatedInvoice;
+        const invoicesFromDb = await prisma.invoice.findMany({
+          where: { userId: userId },
+          include: { lines: true },
+          take: limit,
+          orderBy: {
+            createdAt: "desc",
+          },
+        });
+
+        if (!invoicesFromDb || invoicesFromDb.length === 0) {
+          return {
+            success: false,
+            error: "No invoices found",
+          };
         }
-      });
-    }
 
-    return { success: true, data: invoices };
+        // update status if needed
+        const today = new Date();
+        const updatePromises = invoicesFromDb.map(async (invoice: any) => {
+          if (!invoice.dueDate) return invoice;
+
+          const dueDate = new Date(invoice.dueDate);
+          if (dueDate < today && invoice.status === 4) {
+            return await prisma.invoice.update({
+              where: { id: invoice.id },
+              data: { status: 7 },
+              include: { lines: true },
+            });
+          }
+          return invoice;
+        });
+
+        // wait for all updates
+        const updatedInvoices = await Promise.all(updatePromises);
+
+        return { success: true, data: updatedInvoices };
+      },
+      60 // Cache de 60 secondes (ajustable)
+    );
+
+    return invoices;
   } catch (error) {
     console.log("Error while trying retrieval invoices", error);
     return {
@@ -100,30 +137,45 @@ export async function getAllInvoicesByUserId(
   }
 }
 
-/**
- * Retrieves a specific invoice by its ID from the database, including its associated lines.
- * @param {string} id - The ID of the invoice to retrieve.
- * @returns {Promise<{ success: boolean; data?: Invoice; error?: string }>} A promise resolving to an object indicating success, data, or error.
- * @throws {Error} If an error occurs during the database retrieval.
- */
 export async function getInvoiceById(
   id: string
 ): Promise<{ success: boolean; data?: Invoice; error?: string }> {
   try {
-    const invoice = await prisma.invoice.findUnique({
-      where: { id },
-      include: { lines: true },
-    });
+    const cacheKey = `invoice:${id}`;
 
-    if (!invoice) {
-      return { success: false, error: "Invoice not found" };
-    }
+    const invoice = await getCached<Result<Invoice>>(
+      cacheKey,
+      async () => {
+        console.log(`🔄 Get from DB for ${cacheKey}`);
 
-    return { success: true, data: invoice };
+        const invoiceFromDb = await prisma.invoice.findUnique({
+          where: { id },
+          include: { lines: true },
+        });
+
+        if (!invoiceFromDb) {
+          return {
+            success: false,
+            error: "Invoice not found",
+          };
+        }
+        return { success: true, data: invoiceFromDb };
+      },
+      300 // Cache of 5 minutes for specific invoice
+    );
+
+    return invoice;
   } catch (error) {
     return {
       success: false,
       error: `Error while trying retrieval invoice ${id}.` + error,
     };
   }
+}
+
+export async function refreshUserInvoicesCache(userId: string): Promise<void> {
+  // Supprime tout le cache lié à cet utilisateur
+  serverCache.deleteByPattern(`invoices:user:${userId}`);
+  serverCache.deleteByPattern(`invoice:user:${userId}`);
+  console.log(`🔄 Cache rafraîchi pour l'utilisateur: ${userId}`);
 }
