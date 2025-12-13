@@ -16,12 +16,11 @@ export default function ClientsCountCard() {
 
   return (
     <Card className="flex flex-col gap-3 items-start justify-center p-3 md:p-6">
+      <p className="text-3xl font-bold">{clientsLenght ? clientsLenght : 0}</p>
       <div className="flex w-full items-center justify-between">
-        <p className="text-lg font-semibold">Mes Clients</p>
+        <p className="text-lg font-semibold">Clients</p>
         <GoToLink text="" icon={<BsEye />} href="/dashboard/client" />
       </div>
-
-      <p className="text-3xl font-bold">{clientsLenght ? clientsLenght : 0}</p>
     </Card>
   );
 }
