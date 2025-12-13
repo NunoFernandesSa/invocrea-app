@@ -9,10 +9,12 @@ import { Result } from "@/src/types/result-props-types";
 
 /**
  * Creates a new empty invoice and associates it with the given user.
- * @throws {Error} If the user is not found or if the invoice ID cannot be generated.
+ * @throws {Error} If the user is not found.
  * @param {string} userEmail - The email address of the user.
  * @param {string} invoiceName - The name of the new invoice.
  * @returns {Promise<{ success: boolean; data?: EmptyInvoice; error?: string }>} A promise resolving to an object indicating success, data, or error.
+ * @example
+ * createEmptyInvoice("pY9wV@example.com", "New Invoice");
  */
 export async function createEmptyInvoice(
   userEmail: string,
@@ -137,6 +139,17 @@ export async function getAllInvoicesByUserId(
   }
 }
 
+/**
+ * Retrieves an invoice by its id.
+ * If the invoice is found, it returns the invoice data.
+ * If the invoice is not found, it returns an error message.
+ * If there is an error while trying to retrieve the invoice, it returns an error message.
+ * It uses a cache to store the invoice data for 5 minutes.
+ * @param {string} id - The id of the invoice.
+ * @returns {Promise<{ success: boolean; data?: Invoice; error?: string }>} A promise resolving to an object containing the success status, invoice data, or error message.
+ * @example
+ * getInvoiceById("invoiceId123");
+ */
 export async function getInvoiceById(
   id: string
 ): Promise<{ success: boolean; data?: Invoice; error?: string }> {
