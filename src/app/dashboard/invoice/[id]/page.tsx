@@ -1,11 +1,16 @@
-"use client";
-
+import { getInvoiceById } from "@/lib/actions/invoice-actions";
 import BackButton from "@/src/components/common/BackButton";
 import Container from "@/src/components/common/Container";
 import Section from "@/src/components/common/Section";
-import InvoiceInfo from "@/src/components/features/invoices/InvoiceInfo";
 import { Badge } from "@/src/components/shadcn/ui/badge";
 import { Button } from "@/src/components/shadcn/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/src/components/shadcn/ui/card";
 import {
   Select,
   SelectContent,
@@ -15,76 +20,41 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/src/components/shadcn/ui/select";
-import { Spinner } from "@/src/components/shadcn/ui/spinner";
-import { InvoiceDetailsProps } from "@/src/types/invoice-details-props-types";
-import { Invoice } from "@/src/types/invoice-types";
-import { fetchInvoice } from "@/src/utils/fetch-invoice";
 import { getStatusLabel } from "@/src/utils/get-status-label";
-import { useCallback, useEffect, useState } from "react";
 import { BsTrash } from "react-icons/bs";
+import { MdError } from "react-icons/md";
 import { TfiSave } from "react-icons/tfi";
 
-export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
-  const [invoice, setInvoice] = useState<Invoice | null>(null);
-  const [initialInvoice, setInitialInvoice] = useState<Invoice | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export default async function InvoiceDetailsPage({
+  params,
+}: {
+  params: { id: string };
+}): Promise<JSX.Element> {
+  // Fetch invoice by id
+  const invoiceResult = await getInvoiceById(params.id);
 
-  const loadInvoice = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const invoice = await fetchInvoice(params);
-      if (!invoice) {
-        setError("Facture non trouvée");
-        return;
-      }
-      setInvoice(invoice);
-      setInitialInvoice(invoice);
-    } catch (error) {
-      setError("Erreur lors du chargement de la facture.");
-    } finally {
-      setLoading(false);
-    }
-  }, [params]);
-
-  useEffect(() => {
-    loadInvoice();
-  }, [params]);
-
-  // ----- check if loading state is true and return loading screen -----
-  if (loading) {
+  if (!invoiceResult.success || !invoiceResult.data) {
     return (
       <Container>
-        <div className="flex flex-col justify-center items-center min-h-40">
-          <Spinner className="size-8" />
-          <p className="text-center text-xs">Chargement...</p>
-        </div>
+        <BackButton linkTo="/dashboard/invoice" />
+        <Card className="mx-auto border-red-600 w-1/3 flex flex-col items-center justify-center">
+          <CardHeader className="flex flex-col items-center justify-center text-red-500">
+            <CardTitle className="text-lg">Erreur</CardTitle>
+            <MdError size={32} />
+          </CardHeader>
+
+          <CardContent>
+            <CardDescription>
+              {invoiceResult.error == "Invoice not found" &&
+                "Facture non trouvée."}
+            </CardDescription>
+          </CardContent>
+        </Card>
       </Container>
     );
   }
 
-  // ----- check if error state is not null and return error screen -----
-  if (error) {
-    return (
-      <Container>
-        <BackButton linkTo="/dashboard" />
-        <div className="text-red-500 text-center mt-4">{error}</div>
-      </Container>
-    );
-  }
-
-  // ----- check if invoice state is null and return not found screen -----
-  if (!invoice) {
-    return (
-      <Container>
-        <BackButton linkTo={`/dashboard/invoice`} />
-        <div className="text-red-500 text-center mt-4">
-          Facture non trouvée.
-        </div>
-      </Container>
-    );
-  }
+  const invoice = invoiceResult.data;
 
   return (
     <Container>
@@ -123,14 +93,7 @@ export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
             <Button className="bg-green-800 text-white hover:bg-green-900">
               Sauvegarder <TfiSave />
             </Button>
-            <Button
-              variant={"destructive"}
-              onClick={() => {
-                alert(
-                  `Voulez-vous vraiment supprimer la facture ${invoice.id}`
-                );
-              }}
-            >
+            <Button variant={"destructive"}>
               Supprimer <BsTrash />
             </Button>
           </div>
@@ -138,7 +101,6 @@ export default function InvoiceDetailsPage({ params }: InvoiceDetailsProps) {
 
         <div className="flex w-full md:w-1/3 flex-col mt-6">
           {/* invoice info */}
-          <InvoiceInfo invoice={invoice} setInvoice={setInvoice} />
         </div>
 
         <div className="flex w-full md:w-2/3 flex-col "></div>
