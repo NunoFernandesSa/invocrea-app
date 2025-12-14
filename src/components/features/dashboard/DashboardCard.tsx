@@ -27,7 +27,9 @@ export default function DashboardCard({
         </div>
       </CardDescription>
       <CardHeader className="flex flex-col gap-6 items-center justify-center">
-        <CardTitle className="text-6xl">{content}</CardTitle>
+        <CardTitle className="text-6xl rounded-full w-28 h-28 flex items-center justify-center border-[6px] border-white/20">
+          {content}
+        </CardTitle>
         <CardDescription className="text-white/80">{desc}</CardDescription>
       </CardHeader>
     </Card>
