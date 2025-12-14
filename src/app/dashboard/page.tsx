@@ -2,12 +2,11 @@ import Container from "@/src/components/common/Container";
 import GoToLink from "@/src/components/common/GoToLink";
 import Section from "@/src/components/common/Section";
 import ClientsCountCard from "@/src/components/features/dashboard/ClientsCountCard";
+import DashboardHeader from "@/src/components/features/dashboard/DashboardHeader";
 import InvoicePaidCard from "@/src/components/features/dashboard/InvoicePaidCard";
 import InvoicesCountCard from "@/src/components/features/dashboard/InvoicesCountCard";
 import LatePaymentInvoiceCard from "@/src/components/features/dashboard/LatePaymentInvoiceCard";
 import TotalRevenueInvoicesCard from "@/src/components/features/dashboard/TotalRevenueInvoicesCard";
-import UserWelcome from "@/src/components/features/dashboard/UserWelcome";
-import { Button } from "@/src/components/shadcn/ui/button";
 
 export default async function DashboardPage(): Promise<JSX.Element> {
   // Get today's date in French format
@@ -18,7 +17,11 @@ export default async function DashboardPage(): Promise<JSX.Element> {
 
   return (
     <Container>
-      {/* <UserWelcome text="Ceci est votre Dashboard où vous pouvez gérer vos factures." /> */}
+      <DashboardHeader
+        title="Dashboard"
+        text="Vue d'emsemble de vos factures et clients."
+        className="mb-6 mt-3"
+      />
 
       <div className="w-full flex items-center gap-3">
         <GoToLink
