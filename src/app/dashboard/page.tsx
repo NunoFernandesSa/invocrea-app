@@ -1,14 +1,11 @@
 import Container from "@/src/components/common/Container";
 import GoToLink from "@/src/components/common/GoToLink";
 import Section from "@/src/components/common/Section";
-import ClientsCountCard from "@/src/components/features/dashboard/ClientsCountCard";
 import DashboardCard from "@/src/components/features/dashboard/DashboardCard";
 import DashboardHeader from "@/src/components/features/dashboard/DashboardHeader";
-import InvoicePaidCard from "@/src/components/features/dashboard/InvoicePaidCard";
-import InvoicesCountCard from "@/src/components/features/dashboard/InvoicesCountCard";
-import LatePaymentInvoiceCard from "@/src/components/features/dashboard/LatePaymentInvoiceCard";
-import TotalRevenueInvoicesCard from "@/src/components/features/dashboard/TotalRevenueInvoicesCard";
+import { BsPeopleFill } from "react-icons/bs";
 import { FaFile } from "react-icons/fa";
+import { IoTimeOutline } from "react-icons/io5";
 
 export default async function DashboardPage(): Promise<JSX.Element> {
   // Get today's date in French format
@@ -61,7 +58,7 @@ export default async function DashboardPage(): Promise<JSX.Element> {
             />
 
             <DashboardCard
-              icon={<FaFile />}
+              icon={<BsPeopleFill />}
               title="Clients"
               content="0"
               desc="Nombre total de clients créés"
@@ -69,7 +66,7 @@ export default async function DashboardPage(): Promise<JSX.Element> {
             />
 
             <DashboardCard
-              icon={<FaFile />}
+              icon={<IoTimeOutline />}
               title="Retard de paiement"
               content="0"
               desc="Nombre total de factures en retard de paiement"
@@ -77,9 +74,7 @@ export default async function DashboardPage(): Promise<JSX.Element> {
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <TotalRevenueInvoicesCard />
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
         </div>
       </Section>
     </Container>
