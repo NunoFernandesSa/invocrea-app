@@ -23,25 +23,29 @@ export default async function DashboardPage(): Promise<JSX.Element> {
         className="mb-6 mt-3"
       />
 
-      {/* <div className="w-full flex items-center gap-3">
-        <GoToLink
-          variant={"outline"}
-          size={"sm"}
-          text="Factures"
-          href="/dashboard/invoice"
-        />
+      <Badge
+        variant={"outline"}
+        className="flex items-center justify-between flex-col md:flex-row px-6 py-3 gap-6"
+      >
+        <div className="flex items-center">
+          <FaRegCalendarAlt />
+          <span className="mx-2">{todayDate.toUpperCase()}</span>
+        </div>
+        <div className="flex items-center gap-4">
+          <GoToLink
+            variant={"default"}
+            size={"default"}
+            text="Factures"
+            href="/dashboard/invoice"
+          />
 
-        <GoToLink
-          variant={"outline"}
-          size={"sm"}
-          text="Clients"
-          href="/dashboard/client"
-        />
-      </div> */}
-
-      <Badge variant={"outline"} className="px-6 py-3 flex items-center">
-        <FaRegCalendarAlt />
-        <span className="mx-2">{todayDate.toUpperCase()}</span>
+          <GoToLink
+            variant={"default"}
+            size={"default"}
+            text="Clients"
+            href="/dashboard/client"
+          />
+        </div>
       </Badge>
 
       <Section className="py-6">
