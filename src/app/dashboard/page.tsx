@@ -3,8 +3,9 @@ import GoToLink from "@/src/components/common/GoToLink";
 import Section from "@/src/components/common/Section";
 import DashboardCard from "@/src/components/features/dashboard/DashboardCard";
 import DashboardHeader from "@/src/components/features/dashboard/DashboardHeader";
-import { BsPeopleFill } from "react-icons/bs";
-import { FaFile } from "react-icons/fa";
+import { Badge } from "@/src/components/shadcn/ui/badge";
+import { BsCalendar, BsPeopleFill } from "react-icons/bs";
+import { FaFile, FaRegCalendarAlt } from "react-icons/fa";
 import { IoTimeOutline } from "react-icons/io5";
 
 export default async function DashboardPage(): Promise<JSX.Element> {
@@ -22,7 +23,7 @@ export default async function DashboardPage(): Promise<JSX.Element> {
         className="mb-6 mt-3"
       />
 
-      <div className="w-full flex items-center gap-3">
+      {/* <div className="w-full flex items-center gap-3">
         <GoToLink
           variant={"outline"}
           size={"sm"}
@@ -36,7 +37,12 @@ export default async function DashboardPage(): Promise<JSX.Element> {
           text="Clients"
           href="/dashboard/client"
         />
-      </div>
+      </div> */}
+
+      <Badge variant={"outline"} className="px-6 py-3 flex items-center">
+        <FaRegCalendarAlt />
+        <span className="mx-2">{todayDate.toUpperCase()}</span>
+      </Badge>
 
       <Section className="py-6">
         <div className="flex flex-col gap-6">
